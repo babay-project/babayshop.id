@@ -505,7 +505,7 @@ Solusi: tunggu koneksi stabil atau coba hotspot HP.`
     const displayName = (plan && plan.name) || (product && product.name) || '-';
 
     let out = '';
-    out += '───【 BABAYSHOP.ID 】───\n';
+    out += '───【 BABAYSHOP.MY.ID 】───\n';
     out += `┊･Kode Unik : ${kode}\n`;
     out += `┊･Nama Produk : ${displayName}\n`;
     out += `┊･Harga : ${price}\n`;
