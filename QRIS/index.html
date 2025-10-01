@@ -345,9 +345,70 @@
     .note em {
       font-style: italic;
     }
+body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* backdrop */
+    .popup-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup {
+      background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+      color: #856404;
+      border: 1px solid #ffeeba;
+      border-radius: 12px;
+      padding: 18px 22px;
+      max-width: 500px;
+      line-height: 1.6;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+      animation: fadeIn .4s ease;
+    }
+
+    .popup strong { font-weight: bold; }
+    .popup em { font-style: italic; }
+
+    .popup button {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #856404;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+
+        
+        
     </style>
 </head>
 <body>
+
+<div class="popup-backdrop" id="popupBox">
+    <div class="popup">
+      <button onclick="closePopup()">×</button>
+      ⚠️ <strong>Aktifkan kamera</strong> pada aplikasi e-wallet/MBanking saat memilih menu <em>Scan QR/QRIS</em>.<br><br>
+      Kalau HP cuma 1: <strong>Simpan gambar QRIS</strong> → buka aplikasi → pilih <em>QRIS via Galeri</em> → pilih gambar QRIS Babay dari galeri.
+    </div>
+  </div>
+    
     <div class="container">
         <div class="header">
             <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh73yQszviwrvHkc_oVjOtrJYqpsXgQdN30e9MwMko8V2fjh8rVLc730GqH4hiwkCEbiZDg4fDoSjyWWF03mxUgt66CRJMJ6xFvpx3tjB8VK0_DiWCFoL5MZMgnhIQyrbxwdMW4WBiu_-TDGidgkuWfBk6FMVjvhzeWGRzwhEmd3wCrirvWCr7maV_-DdeR" alt="BabayShop Logo" class="logo">
@@ -364,7 +425,7 @@
                     <img src="https://blogger.googleusercontent.com/img/a/AVvXsEicxgapeHgByovmscN00Pj6eEKg4NQ-FqU-AJwOCL1IKzrs4wrET4cdvSxe4k5CEKzr7-Vs6XM_OmDOvt7yAr7Nf9SQOyy4BCxMGrtRtgKicZOrKkfxhlYOwFiEPIIeVkBb2BvmEcL3pFnxHJ5HSJ33b9-aUdf82Q9RkFyqF1rFeUfzlNTLoQ3qXZfOkB1b" alt="QRIS Payment" class="qris-image">
                     <p><strong>Scan QRIS di atas untuk pembayaran</strong></p>
                     <div class="note">
-    ⚠️ <strong>Aktifkan kamera</strong> pada aplikasi e-wallet/MBanking saat memilih menu <em>Scan QR/QRIS</em>. <br>
+    ⚠️ <strong>Aktifkan kamera HP</strong>saat memilih menu <em>Scan QRIS</em>. <br>
     Kalau HP cuma 1: <strong>Simpan gambar QRIS</strong> → buka aplikasi → pilih <em>QRIS via Galeri</em> → pilih gambar QRIS Babay dari galeri.
   </div>
                 </div>
@@ -442,6 +503,27 @@
     </div>
 
     <script>
+
+
+
+// tampilkan popup setelah 2 detik
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('popupBox').style.display = 'flex';
+      }, 2000);
+    });
+
+    function closePopup(){
+      document.getElementById('popupBox').style.display = 'none';
+    }
+
+
+
+
+
+
+
+        
         function filterProducts(category) {
             const products = document.querySelectorAll('.product-card');
             const buttons = document.querySelectorAll('.category-btn');
