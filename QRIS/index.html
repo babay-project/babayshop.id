@@ -1,9 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial Pembayaran QRIS</title>
+    <title>BabayShop.id - Premium Apps Catalog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,445 +15,461 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
-            color: #333;
+            padding: 20px 0;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
-        header {
+        .header {
             text-align: center;
-            color: white;
             margin-bottom: 40px;
-            animation: fadeInDown 0.8s ease;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        header h1 {
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #333;
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        header p {
+        .header p {
+            color: #666;
             font-size: 1.2em;
-            opacity: 0.9;
         }
 
-        .main-content {
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .products-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
         }
 
-        .card {
+        .product-card {
             background: white;
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .qris-section {
-            text-align: center;
-        }
-
-        .qris-section h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .qris-image {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            margin: 20px 0;
-            transition: transform 0.3s ease;
-        }
-
-        .qris-image:hover {
-            transform: scale(1.05);
-        }
-
-        .recipient-name {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-top: 15px;
-        }
-
-        .tutorial-section h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .steps {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-
-        .steps li {
-            counter-increment: step-counter;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
             position: relative;
-            padding: 20px 20px 20px 70px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
         }
 
-        .steps li:hover {
-            transform: translateX(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .steps li::before {
-            content: counter(step-counter);
+        .product-card::before {
+            content: '';
             position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-right: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .netflix { background: #e50914; }
+        .youtube { background: #ff0000; }
+        .spotify { background: #1db954; }
+        .chatgpt { background: #10a37f; }
+        .canva { background: #00c4cc; }
+        .disney { background: #113ccf; }
+        .prime { background: #00a8e1; }
+        .zoom { background: #2d8cff; }
+        .default { background: linear-gradient(45deg, #667eea, #764ba2); }
+
+        .product-title {
+            font-size: 1.3em;
             font-weight: bold;
-            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 5px;
         }
 
-        .alternative-section {
-            grid-column: 1 / -1;
+        .product-duration {
+            color: #666;
+            font-size: 0.9em;
         }
 
-        .alternative-section h2 {
-            color: #667eea;
-            margin-bottom: 25px;
+        .product-details {
+            margin: 15px 0;
+        }
+
+        .product-desc {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .product-price {
             font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
             text-align: center;
+            transition: all 0.3s ease;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .payment-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .payment-title {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
         }
 
         .payment-methods {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        .method-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .payment-group {
+            text-align: center;
         }
 
-        .method-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .method-card h3 {
+        .payment-group h3 {
             color: #667eea;
             margin-bottom: 15px;
             font-size: 1.3em;
         }
 
-        .account-info {
-            background: white;
+        .qris-image {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .payment-info {
+            background: #f8f9fa;
             padding: 15px;
             border-radius: 10px;
             margin-bottom: 10px;
         }
 
-        .account-number {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
+        .payment-info strong {
             color: #333;
-            margin: 5px 0;
-            font-size: 1.1em;
         }
 
-        .copy-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            width: 100%;
-            margin-top: 10px;
         }
 
-        .copy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .copy-btn:active {
-            transform: scale(0.95);
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
+        .terms {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            display: none;
-            animation: slideIn 0.3s ease;
-            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
-        .notification.show {
-            display: block;
+        .terms h3 {
+            margin-bottom: 15px;
+            color: #fff;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .terms ul {
+            text-align: left;
+            padding-left: 20px;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-            }
-            to {
-                transform: translateX(0);
-            }
+        .terms li {
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         @media (max-width: 768px) {
-            .main-content {
+            .products-grid {
                 grid-template-columns: 1fr;
             }
-
-            header h1 {
+            
+            .header h1 {
                 font-size: 2em;
             }
-
-            .payment-methods {
-                grid-template-columns: 1fr;
+            
+            .product-actions {
+                flex-direction: column;
             }
         }
 
         .badge {
             display: inline-block;
-            background: #10b981;
+            background: #ff4757;
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
             margin-left: 10px;
+        }
+
+        .guarantee {
+            background: #2ed573;
+        }
+
+        .lifetime {
+            background: #ffa502;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>💳 Tutorial Pembayaran QRIS</h1>
-            <p>Mudah, Cepat, dan Aman</p>
-        </header>
+        <div class="header">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh73yQszviwrvHkc_oVjOtrJYqpsXgQdN30e9MwMko8V2fjh8rVLc730GqH4hiwkCEbiZDg4fDoSjyWWF03mxUgt66CRJMJ6xFvpx3tjB8VK0_DiWCFoL5MZMgnhIQyrbxwdMW4WBiu_-TDGidgkuWfBk6FMVjvhzeWGRzwhEmd3wCrirvWCr7maV_-DdeR" alt="BabayShop Logo" class="logo">
+            <p>Premium Apps & Subscription Services</p>
+        </div>
 
-        <div class="main-content">
-            <div class="card qris-section">
-                <h2>Scan QRIS <span class="badge">UTAMA</span></h2>
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEicxgapeHgByovmscN00Pj6eEKg4NQ-FqU-AJwOCL1IKzrs4wrET4cdvSxe4k5CEKzr7-Vs6XM_OmDOvt7yAr7Nf9SQOyy4BCxMGrtRtgKicZOrKkfxhlYOwFiEPIIeVkBb2BvmEcL3pFnxHJ5HSJ33b9-aUdf82Q9RkFyqF1rFeUfzlNTLoQ3qXZfOkB1b" alt="QRIS Code" class="qris-image">
-                <div class="recipient-name">
-                    📱 BAYU RIZKY SAMPURNA
+        
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <h2 class="payment-title">💳 Metode Pembayaran</h2>
+            <div class="payment-methods">
+                <div class="payment-group">
+                    <h3><i class="fas fa-qrcode"></i> QRIS</h3>
+                    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEicxgapeHgByovmscN00Pj6eEKg4NQ-FqU-AJwOCL1IKzrs4wrET4cdvSxe4k5CEKzr7-Vs6XM_OmDOvt7yAr7Nf9SQOyy4BCxMGrtRtgKicZOrKkfxhlYOwFiEPIIeVkBb2BvmEcL3pFnxHJ5HSJ33b9-aUdf82Q9RkFyqF1rFeUfzlNTLoQ3qXZfOkB1b" alt="QRIS Payment" class="qris-image">
+                    <p><strong>Scan QRIS di atas untuk pembayaran</strong></p>
                 </div>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Alert Box</title>
-  <style>
-    .note {
-      background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
-      color: #856404;
-      padding: 12px 18px;
-      border-radius: 10px;
-      font-size: 0.95em;
-      border: 1px solid #ffeeba;
-      max-width: 600px;
-      margin: 20px auto;
-      line-height: 1.6;
-    }
-    .note strong {
-      font-weight: bold;
-    }
-    .note em {
-      font-style: italic;
-    }
-  </style>
-</head>
-<body>
+                <div class="payment-group">
+                    <h3><i class="fas fa-wallet"></i> E-Wallet</h3>
+                    <div class="payment-info">
+                        <strong>GoPay:</strong> 0882 1599 3544
+                    </div>
+                    <div class="payment-info">
+                        <strong>DANA:</strong> 0882 1599 3544
+                    </div>
+                    <div class="payment-info">
+                        <strong>ShopeePay:</strong> 0882 1599 3544
+                    </div>
+                    <div class="payment-info">
+                        <strong>LinkAja:</strong> 0882 1599 3544
+                    </div>
+                    <p><em>Semua atas nama: <strong>BAYU RIZKY SAMPURNA</strong></em></p>
+                </div>
 
-  <div class="note">
-    ⚠️ <strong>Gunakan kamera</strong> pada HP saat membayar menu <em>Scan QRIS</em>. <br>
-    Kalau HP cuma 1: <strong>Simpan gambar QRIS</strong> → buka aplikasi → pilih <em>QRIS via Galeri</em> → pilih gambar QRIS Babay dari galeri.
-  </div>
-
-</body>
-</html>
-
-                
-            </div>
-
-            <div class="card tutorial-section">
-                <h2>Cara Pembayaran</h2>
-                <ul class="steps">
-                    <li>Buka aplikasi e-wallet atau mobile banking Anda</li>
-                    <li>Pilih menu "Scan QR" atau "QRIS"</li>
-                    <li>Arahkan kamera ke kode QRIS / Bisa Via Gallery (QRIS bisa di Screenshot)</li>
-                    <li>Masukkan nominal pembayaran yang diinginkan</li>
-                    <li>Konfirmasi pembayaran dengan PIN Anda</li>
-                    <li>Selesai! Simpan bukti transaksi</li>
-                </ul>
+                <div class="payment-group">
+                    <h3><i class="fas fa-university"></i> Transfer Bank</h3>
+                    <div class="payment-info">
+                        <strong>Bank Mandiri (008):</strong><br>
+                        1120 0204 38110
+                    </div>
+                    <div class="payment-info">
+                        <strong>BSI - Bank Syariah Indonesia (451):</strong><br>
+                        7183 942 225
+                    </div>
+                    <div class="payment-info">
+                        <strong>Bank Jago (542):</strong><br>
+                        1006 4533 1871
+                    </div>
+                    <div class="payment-info">
+                        <strong>SeaBank (535):</strong><br>
+                        9013 7594 0437
+                    </div>
+                    <p><em>Semua atas nama: <strong>BAYU RIZKY SAMPURNA</strong></em></p>
+                </div>
             </div>
         </div>
 
-        <div class="card alternative-section">
-            <h2>💰 Metode Pembayaran Alternatif</h2>
-            
-            <h3 style="color: #667eea; margin: 30px 0 20px 0;">E-Wallet</h3>
-            <div class="payment-methods">
-                <div class="method-card">
-                    <h3>GoPay</h3>
-                    <div class="account-info">
-                        <div class="account-number">0882 1599 3544</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'GoPay')">📋 Copy</button>
-                </div>
-
-                <div class="method-card">
-                    <h3>DANA</h3>
-                    <div class="account-info">
-                        <div class="account-number">0882 1599 3544</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'DANA')">📋 Copy</button>
-                </div>
-
-                <div class="method-card">
-                    <h3>ShopeePay</h3>
-                    <div class="account-info">
-                        <div class="account-number">0882 1599 3544</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'ShopeePay')">📋 Copy</button>
-                </div>
-
-                <div class="method-card">
-                    <h3>LinkAja</h3>
-                    <div class="account-info">
-                        <div class="account-number">0882 1599 3544</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('0882 1599 3544', 'LinkAja')">📋 Copy</button>
-                </div>
-            </div>
-
-            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Transfer Bank</h3>
-            <div class="payment-methods">
-                <div class="method-card">
-                    <h3>Bank Mandiri</h3>
-                    <div class="account-info">
-                        <small>Kode Bank: 008</small>
-                        <div class="account-number">1120 0204 38110</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('1120020438110', 'Bank Mandiri')">📋 Copy</button>
-                </div>
-
-                <div class="method-card">
-                    <h3>BSI</h3>
-                    <div class="account-info">
-                        <small>Kode Bank: 451</small>
-                        <div class="account-number">7183 942 225</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('7183942225', 'BSI')">📋 Copy</button>
-                </div>
-
-                <div class="method-card">
-                    <h3>Bank Jago</h3>
-                    <div class="account-info">
-                        <small>Kode Bank: 542</small>
-                        <div class="account-number">1006 4533 1871</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('100645331871', 'Bank Jago')">📋 Copy</button>
-                </div>
-
-                <div class="method-card">
-                    <h3>SeaBank</h3>
-                    <div class="account-info">
-                        <small>Kode Bank: 535</small>
-                        <div class="account-number">9013 7594 0437</div>
-                        <small>a.n. BAYU RIZKY SAMPURNA</small>
-                    </div>
-                    <button class="copy-btn" onclick="copyText('901375940437', 'SeaBank')">📋 Copy</button>
-                </div>
-            </div>
+        <!-- Terms and Conditions -->
+        <div class="terms">
+            <h3><i class="fas fa-info-circle"></i> Ketentuan & Informasi Penting</h3>
+            <ul>
+                <li><strong>Private Account:</strong> Hanya Anda yang menggunakan akun tersebut (bisa login 3-5 user)</li>
+                <li><strong>Sharing Account:</strong> Digunakan bersama, hanya 1 device, sering limit & minta kode login</li>
+                <li><strong>Full Garansi:</strong> Jika terjadi error atau langganan tiba-tiba tercancel, bisa minta ganti akun</li>
+                <li><strong>No Garansi:</strong> Jika terjadi error pada akun, tidak mendapat akun pengganti</li>
+                <li><strong>1 Bulan:</strong> 25-30 hari, 1 bulan keatas auto renewal/perpanjang</li>
+                <li><strong>Lifetime:</strong> Selamanya/seumur hidup dengan garansi tertentu</li>
+                <li><strong>Replace/Renew:</strong> Playlist akan hilang saat penggantian</li>
+                <li><strong>Backfree:</strong> Langganan premium pada akun hilang karena terdeteksi pembayaran tidak sah</li>
+            </ul>
+            <p style="text-align: center; margin-top: 20px; font-weight: bold; color: #ff4757;">
+                ⚠️ Semua transaksi NO REFUND kecuali kesalahan terjadi error pada akun atau kesalahan saat seller memproses akun!
+            </p>
+            <p style="text-align: center; color: #2ed573; font-weight: bold;">
+                💡 Membeli = Paham & Sabar
+            </p>
         </div>
-    </div>
 
-    <div class="notification" id="notification">
-        ✅ Nomor rekening berhasil disalin!
+        <div class="footer">
+            <h3>📞 Hubungi Admin</h3>
+            <p>WhatsApp: <strong>+62 878-8964-3544</strong></p>
+            <p>Website: <strong>babayshop.id</strong></p>
+            <br>
+            <p>© 2024 BabayShop.id - Premium Apps & Subscription Services</p>
+            <p>Terima kasih telah mempercayai layanan kami! 🙏</p>
+        </div>
     </div>
 
     <script>
-        function copyText(text, method) {
-            navigator.clipboard.writeText(text).then(() => {
-                const notification = document.getElementById('notification');
-                notification.textContent = `✅ Nomor ${method} berhasil disalin!`;
-                notification.classList.add('show');
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }).catch(err => {
-                alert('Gagal menyalin: ' + err);
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter products
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.category === category) {
+                    product.style.display = 'block';
+                    setTimeout(() => {
+                        product.style.opacity = '1';
+                        product.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    product.style.opacity = '0';
+                    product.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        product.style.display = 'none';
+                    }, 300);
+                }
             });
         }
+
+        // Smooth scroll animation on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Add hover effect for payment info
+        document.querySelectorAll('.payment-info').forEach(info => {
+            info.addEventListener('click', function() {
+                // Copy to clipboard functionality could be added here
+                this.style.background = '#e3f2fd';
+                setTimeout(() => {
+                    this.style.background = '#f8f9fa';
+                }, 1000);
+            });
+        });
     </script>
 </body>
 </html>
