@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>S&K Netflix – Babayshop.id</title>
+  <meta name="description" content="Syarat & Ketentuan penggunaan akun Netflix (sharing profil) di Babayshop.id. Panduan login, pencegahan suspicious activity, dan kebijakan penggunaan.">
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#0f172a;
+      --card:#111b2f;
+      --muted:#8aa0c6;
+      --text:#e6eefc;
+      --accent:#7c3aed;   /* ungu */
+      --accent-2:#06b6d4; /* cyan */
+      --accent-3:#22c55e; /* hijau */
+      --accent-4:#f59e0b; /* amber */
+      --accent-5:#ef4444; /* merah */
+      --accent-6:#10b981; /* hijau muda */
+      --ring: rgba(124,58,237,.25);
+      --radius:20px;
+      --shadow:0 12px 30px rgba(0,0,0,.35);
+      --maxw:1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{background:linear-gradient(180deg,var(--bg),#0a1024 40%,#0b1430);color:var(--text);font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif}
+    a{color:#9ad1ff;text-decoration:none} a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw);margin:auto;padding:28px 16px 80px}
+    header{display:flex;gap:16px;align-items:center;margin:8px 0 22px}
+    .logo{display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:linear-gradient(145deg,var(--accent),#3b82f6);box-shadow:inset 0 0 0 2px rgba(255,255,255,.06)}
+    .logo svg{width:28px;height:28px;fill:white;opacity:.95}
+    h1{font-size:clamp(28px,3.2vw,40px);line-height:1.15;margin:0}
+    .subtitle{color:var(--muted);margin-top:6px}
+    .meta{margin-top:6px;font-size:14px;color:#b9c7e6}
+
+    .hero{
+      display:grid;grid-template-columns:70px 1fr;gap:18px;
+      padding:18px;border-radius:18px;background:linear-gradient(180deg,#0e1a36,#0b1631);
+      box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06);margin-bottom:24px
+    }
+    .toc{margin:18px 0 32px;padding:14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+    .toc b{display:block;margin-bottom:6px}
+    .toc a{display:inline-block;margin:6px 10px 0 0;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06)}
+    .grid{display:grid;gap:18px}
+    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .card{
+      position:relative; border-radius:var(--radius); background:var(--card);
+      padding:18px 18px 18px 18px; box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.06); overflow:hidden
+    }
+    .card:before{
+      content:""; position:absolute; inset:0; background:radial-gradient(600px 140px at -10% -10%, var(--ring), transparent 70%);
+      pointer-events:none
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      font-weight:700;letter-spacing:.2px;margin-bottom:10px;font-size:13px;color:#0a1224;background:white
+    }
+    .badge svg{width:18px;height:18px}
+    .b1{background:linear-gradient(90deg,#e9d5ff,#c7d2fe);color:#2e1065}
+    .b2{background:linear-gradient(90deg,#cffafe,#bae6fd);color:#083344}
+    .b3{background:linear-gradient(90deg,#dcfce7,#bbf7d0);color:#052e1a}
+    .b4{background:linear-gradient(90deg,#fef9c3,#fde68a);color:#422006}
+    .b5{background:linear-gradient(90deg,#fee2e2,#fecaca);color:#450a0a}
+    .b6{background:linear-gradient(90deg,#d1fae5,#a7f3d0);color:#064e3b}
+
+    h2{font-size:clamp(20px,2.2vw,24px);margin:8px 0 10px}
+    ul{margin:8px 0 0 0;padding:0 0 0 18px}
+    li{margin:6px 0}
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
+    footer{margin-top:38px;color:var(--muted);font-size:13px;text-align:center}
+    .brand{font-weight:800;letter-spacing:.3px}
+    .stack{display:flex;flex-direction:column;gap:18px}
+
+    /* one-column on very narrow screens */
+    @media(max-width:520px){
+      .hero{grid-template-columns:1fr}
+      header{align-items:flex-start}
+   /* CSS untuk logo yang Anda tanyakan */
+        .logo {
+            width: 80px;  /* Lebar container logo */
+            height: 120px; /* Tinggi container logo */
+            margin-right: 20px; /* Jarak antara logo dan teks */
+            flex-shrink: 0; /* Mencegah logo mengecil */
+        }
+
+        .netflix-logo {
+            width: 100%;
+            height: 100%;
+            display: block;
+            /* Efek bayangan untuk logo */
+            filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        /* Styling tambahan untuk teks */
+        h1 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
+        .brand {
+            color: #E50914;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #555;
+        }
+        .meta {
+            font-size: 12px;
+            color: #777;
+            margin-top: 10px;
+        }
+        .mono {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    
+    
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+<header>
+    <div class="logo" aria-hidden="true">
+        <svg class="netflix-logo" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 0 0 L 30 0 L 30 150 L 0 150 Z" fill="#E50914" />
+            <path d="M 70 0 L 100 0 L 70 150 L 40 150 L 70 0 Z" fill="#E50914" />
+            <path d="M 30 0 L 70 0 L 40 150 L 0 150 L 30 0 Z" fill="#BA0A12" />
+            <path d="M 30 0 L 70 0 L 30 0 Z" fill="none" stroke="#A0080F" stroke-width="1"/>
+            <path d="M 0 150 L 40 150 L 0 150 Z" fill="none" stroke="#A0080F" stroke-width="1"/>
+        </svg>
+    </div>
+    <div>
+        <h1>Syarat & Ketentuan Netflix – <span class="brand">Babayshop.id</span></h1>
+        <div class="subtitle">Panduan resmi untuk pembeli langganan Netflix (sharing profil) agar penggunaan aman, stabil, dan bebas error.</div>
+           </div>
+</header>
+
+    <section class="hero">
+      <div style="display:grid;place-items:center">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a3bffa" stroke-width="1.6">
+          <circle cx="12" cy="12" r="10" opacity=".25" fill="#3b82f6"></circle>
+          <path d="M8 12l2 2 6-6"></path>
+        </svg>
+      </div>
+      <div>
+        <b>Ringkas:</b> Satu profil = satu pengguna = maksimal 1 perangkat aktif.
+        Hindari gonta-ganti device, jangan spam login, dan ikuti langkah pembersihan data sebelum login untuk mencegah <i>Suspicious Activity</i>.
+        Jika butuh bantuan, hubungi admin Babayshop.
+        <div class="hint">Halaman ini merangkum kebijakan, tips login, pencegahan error, dan catatan penting untuk semua pembeli.</div>
+      </div>
+    </section>
+
+    <nav class="toc">
+      <b>Daftar Isi</b>
+      <div>
+        <a href="#tips-login">Tips Login & Troubleshooting</a>
+        <a href="#hindari-suspicious">Hindari Suspicious Activity</a>
+        <a href="#catatan-penting">Catatan Penting</a>
+        <a href="#kesalahan-umum">Kesalahan Umum & Solusi</a>
+        <a href="#peringatan">Peringatan</a>
+      </div>
+    </nav>
+
+    <section id="tips-login" class="grid">
+      <!-- Web / Laptop -->
+      <article class="card">
+        <span class="badge b1">
+          <!-- icon doc -->
+          <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" fill="currentColor" opacity=".15"/><path d="M14 3v6h6" stroke="currentColor" fill="none"/><path d="M9 13h6M9 17h6" stroke="currentColor"/></svg>
+          LOGIN VIA WEB (PC/Laptop)
+        </span>
+        <h2>Langkah di Browser</h2>
+        <ul>
+          <li>Bersihkan cookies Netflix: buka <span class="mono">netflix.com/clearcookies</span>, lalu ke <span class="mono">netflix.com</span>.</li>
+          <li>Klik <b>Sign In</b> → masukkan email & PIN → pilih profil yang ditentukan → masukkan PIN.</li>
+          <li>Gagal login? <b>Restart laptop</b> lalu coba lagi dengan <b>jaringan berbeda</b>.</li>
+        </ul>
+        <div class="hint">Login pertama disarankan pakai data/hotspot, bukan Wi-Fi rumah.</div>
+      </article>
+
+      <!-- App / HP -->
+      <article class="card">
+        <span class="badge b2">
+          <!-- icon phone -->
+          <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2" fill="currentColor" opacity=".15"/><rect x="9" y="4" width="6" height="12" rx="1" stroke="currentColor" fill="none"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+          LOGIN VIA APP (HP)
+        </span>
+        <h2>Langkah di Aplikasi</h2>
+        <ul>
+          <li><b>Uninstall</b> aplikasi Netflix → <b>Restart</b> HP → install ulang → login.</li>
+          <li>Jika Wi-Fi tidak bisa, gunakan <b>data seluler</b>. Jika masih gagal, coba <b>hotspot jaringan lain</b>.</li>
+          <li>Jangan spam login; ketik manual email & password (hindari copy-paste/spasi).</li>
+        </ul>
+      </article>
+
+      <!-- Smart TV -->
+      <article class="card">
+        <span class="badge b3">
+          <!-- icon tv -->
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2" fill="currentColor" opacity=".15"/><path d="M7 19h10M12 17v2" stroke="currentColor"/></svg>
+          LOGIN VIA SMART TV
+        </span>
+        <h2>Masuk Menggunakan Web Code</h2>
+        <ul>
+          <li>Pada TV pilih <b>Masuk</b> → masukkan email → klik <b>Masuk dari Web</b>.</li>
+          <li>Scan QR dengan kamera HP atau masukkan kode yang tampil di TV.</li>
+          <li>Tidak perlu login Netflix di HP terlebih dahulu.</li>
+        </ul>
+      </article>
+
+      <!-- Salah Password / Umum -->
+      <article class="card">
+        <span class="badge b4">
+          <!-- icon wrench -->
+          <svg viewBox="0 0 24 24"><path d="M14 7l3-3 3 3-3 3-3-3zM2 22l7-7" stroke="currentColor"/><circle cx="9" cy="15" r="3" fill="currentColor" opacity=".15"/></svg>
+          KETIKA SALAH PASSWORD / ERROR
+        </span>
+        <h2>Jangan Panik, Ikuti Ini</h2>
+        <ul>
+          <li>Jangan spam login; diamkan ±10 detik sebelum klik <b>Masuk</b> lagi.</li>
+          <li>Periksa & ketik ulang email/password secara manual.</li>
+          <li>Ganti jaringan (Wi-Fi ⇄ Data/Hotspot) atau reinstall aplikasi.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="hindari-suspicious" class="grid" style="margin-top:18px">
+      <!-- Apps -->
+      <article class="card">
+        <span class="badge b5">
+          <!-- icon shield -->
+          <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3z" fill="currentColor" opacity=".15"/><path d="M8 11l3 3 5-5" stroke="currentColor"/></svg>
+          HINDARI AUTO RESET (APPS)
+        </span>
+        <h2>Prosedur Bersih Sebelum Login</h2>
+        <ul>
+          <li><b>Uninstall</b> aplikasi Netflix.</li>
+          <li><b>Clear data & cache</b> (sebelum uninstall jika perlu).</li>
+          <li>Aktifkan <b>Mode Pesawat 2 menit</b> → matikan.</li>
+          <li><b>Restart</b> device, lalu ulangi lagi Mode Pesawat 2 menit → matikan.</li>
+          <li>Login memakai <b>jaringan & device yang lancar</b>.</li>
+        </ul>
+      </article>
+
+      <!-- Website/TV -->
+      <article class="card">
+        <span class="badge b6">
+          <!-- icon globe -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".15"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" stroke="currentColor"/></svg>
+          HINDARI AUTO RESET (WEB/TV)
+        </span>
+        <h2>Langkah di Browser & Smart TV</h2>
+        <ul>
+          <li><b>Clear cache & cookies</b> browser (Chrome/Safari/dll).</li>
+          <li>Restart jaringan: Mode Pesawat 2 menit lalu matikan, atau <b>restart router/TV</b>.</li>
+          <li>Login dengan jaringan stabil & device bersih; pastikan email/password benar.</li>
+          <li>Jangan spam login.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="catatan-penting" class="stack" style="margin-top:18px">
+      <article class="card">
+        <span class="badge b1">
+          <svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z" fill="currentColor" opacity=".15"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor"/></svg>
+          CATATAN PENTING
+        </span>
+        <h2>Kebijakan Penggunaan Profil</h2>
+        <ul>
+          <li><b>Satu profil hanya untuk satu pengguna</b>, maksimal dipakai di <b>1 perangkat</b>.</li>
+          <li>Login di dua perangkat dengan profil yang sama akan dianggap <i>Suspicious Activity</i> dan langganan dapat <b>dihentikan tanpa pemberitahuan</b>.</li>
+          <li><b>Jangan sering login-logout untuk ganti device</b>. Pakai <b>1 device saja</b> sampai masa premium berakhir; setelah itu silakan langganan akun baru di Babayshop.</li>
+          <li>Password bisa <b>berubah sewaktu-waktu</b>. Admin akan mengirim password baru jika ada perubahan (mis. masa langganan pengguna lain habis). Jika belum menerima pemberitahuan, silakan <b>lapor ke admin</b>.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="kesalahan-umum" class="stack" style="margin-top:18px">
+      <article class="card">
+        <span class="badge b4">
+          <svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="currentColor" opacity=".15"/><path d="M12 7v6m0 4h.01" stroke="currentColor" stroke-linecap="round"/></svg>
+          KESALAHAN UMUM & SOLUSI
+        </span>
+        <h2>“Unable to connect to Netflix” di TV</h2>
+        <ul>
+          <li>Jika muncul: “Tidak Dapat Menyambung ke Netflix, Coba Lagi.” atau “Unable to connect to Netflix. Please try again.” → <b>100% masalah pada perangkat/TV</b>.</li>
+          <li>Tunggu koneksi internet stabil atau gunakan <b>hotspot HP</b>.</li>
+        </ul>
+        <h2 style="margin-top:12px">Saat Password Dianggap Salah</h2>
+        <ul>
+          <li>Periksa & ketik ulang manual (hindari copy-paste & spasi tersembunyi).</li>
+          <li>Diamkan ±10 detik sebelum klik <b>Masuk</b> lagi.</li>
+          <li>Ganti jaringan, hapus data/cookies, atau reinstall aplikasi.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="peringatan" class="stack" style="margin-top:18px">
+      <article class="card">
+        <span class="badge b5">
+          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3L12 3z" fill="currentColor" opacity=".15"/><path d="M12 10v4m0 3h.01" stroke="currentColor" stroke-linecap="round"/></svg>
+          PERINGATAN
+        </span>
+        <h2>Pahami Sistem Sharing Profil</h2>
+        <ul>
+          <li>Akun Netflix dibeli dengan <b>kualitas tinggi</b> lalu <b>dibagi per profil</b> agar kalian bisa menikmati tayangan premium dengan <b>harga ekonomis</b>.</li>
+          <li>Karena sistemnya sharing, <b>WAJIB</b> memahami S&K dan mengikuti panduan agar terhindar dari error / terkunci.</li>
+          <li>Jangan abaikan edukasi dari admin. Dengan bertransaksi di Babayshop, Anda menyatakan telah membaca & menyetujui halaman ini.</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer>
+      © <span class="brand">Babayshop.id</span> • Pusat bantuan: hubungi admin via kontak resmi di website.
+    </footer>
+  </div>
+</body>
+</html>
