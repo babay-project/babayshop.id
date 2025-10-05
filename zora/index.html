@@ -25,7 +25,7 @@
     .container{max-width:1100px;margin:0 auto;padding:20px}
     .hero{
       background: radial-gradient(1200px 400px at 20% -10%, rgba(124,58,237,.25),transparent 60%),
-                  radial-gradient(1200px 400px at 80% -20%, rgba(34,211,238,.2),transparent 60%);
+                radial-gradient(1200px 400px at 80% -20%, rgba(34,211,238,.2),transparent 60%);
       border:1px solid var(--bd);
       border-radius:28px;
       padding:48px 28px;
@@ -67,6 +67,52 @@
     .ok{color:var(--ok);font-weight:700}
     .muted{color:var(--muted)}
     .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0e1527;border:1px solid var(--bd);padding:2px 6px;border-radius:6px;color:#cbd5e1}
+    
+    /* === KODE ANIMASI BARU DIMULAI DI SINI === */
+    
+    /* 1. Definisikan animasi keyframes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* 2. Gaya untuk elemen yang akan dianimasikan saat dibuka */
+    .hero,
+    .hero .badge,
+    .hero .title,
+    .hero .subtitle {
+      /* Sembunyikan elemen di awal dan atur properti animasi */
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    /* 3. Atur delay (penundaan) agar elemen muncul satu per satu (staggered effect) */
+    .hero { animation-delay: 0.2s; }
+    .hero .badge { animation-delay: 0.4s; }
+    .hero .title { animation-delay: 0.6s; }
+    .hero .subtitle { animation-delay: 0.8s; }
+    
+    /* 4. Gaya untuk elemen yang akan dianimasikan saat di-scroll */
+    .card {
+      /* Sembunyikan kartu di awal */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .card.is-visible {
+      /* Saat kelas 'is-visible' ditambahkan oleh JavaScript, kartu akan muncul */
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* === AKHIR DARI KODE ANIMASI === */
+
   </style>
 </head>
 <body>
@@ -76,7 +122,7 @@
       <h1 class="title">Ubah Bio Instagram • Dapat Dollar Mingguan</h1>
       <p class="subtitle">Dipilih langsung oleh agency (tanpa formulir). 1 akun bisa ikut <b>seminggu sekali</b>. Konten sensitif/fake followers <b>boleh</b> — yang dinilai: jumlah followers, keaktifan, dan insights.</p>
       <div class="cta-row">
-           </div>
+          </div>
     </section>
 
     <section class="grid">
@@ -94,31 +140,27 @@
       </div>
 
       <div class="card col-6">
-  <h2>💸 Estimasi Reward</h2>
-  <table class="table">
-    <tr><th>Followers IG</th><th>Perkiraan USD</th></tr>
-    <tr><td>100K – 500K</td><td>$5 – $50</td></tr>
-    <tr><td>500K – 1M</td><td>$20 – $70</td></tr>
-    <tr><td>1M+</td><td>$30 – $100</td></tr>
-  </table>
+        <h2>💸 Estimasi Reward</h2>
+        <table class="table">
+          <tr><th>Followers IG</th><th>Perkiraan USD</th></tr>
+          <tr><td>100K – 500K</td><td>$5 – $50</td></tr>
+          <tr><td>500K – 1M</td><td>$20 – $70</td></tr>
+          <tr><td>1M+</td><td>$30 – $100</td></tr>
+        </table>
 
+        <figure style="margin-top:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <img id="exampleDollar"  
+               src="https://babayshop.my.id/zora/dollar.png"
+               alt="Contoh hasil dollar verifikasi akun Zora"  
+               style="width:60%;max-width:240px;border-radius:14px;border:1px solid var(--bd);
+                      box-shadow:0 0 20px rgba(124,58,237,0.15);transition:0.3s ease;">
+          <figcaption style="font-size:.9rem;color:var(--muted);margin-top:6px;text-align:center;">
+            Contoh hasil verifikasi dollar setelah akun IG diverifikasi.
+          </figcaption>
+        </figure>
 
-
-<!-- Gambar contoh hasil dollar (paksa center & kecil) -->
-<figure style="margin-top:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-  <img id="exampleDollar" 
-       src="https://babayshop.my.id/zora/dollar.png"
-       alt="Contoh hasil dollar verifikasi akun Zora" 
-       style="width:60%;max-width:240px;border-radius:14px;border:1px solid var(--bd);
-              box-shadow:0 0 20px rgba(124,58,237,0.15);transition:0.3s ease;">
-  <figcaption style="font-size:.9rem;color:var(--muted);margin-top:6px;text-align:center;">
-    Contoh hasil verifikasi dollar setelah akun IG diverifikasi.
-  </figcaption>
-</figure>
-
-
-  <p class="muted">Nominal bersifat acak/variatif per verifikasi & profil; dapat berubah tiap periode.</p>
-</div>
+        <p class="muted">Nominal bersifat acak/variatif per verifikasi & profil; dapat berubah tiap periode.</p>
+      </div>
 
       <div class="card col-6">
         <h2>🤝 Pembagian Hasil</h2>
@@ -137,12 +179,10 @@
         <div class="step"><div class="num">4</div><div><b>Verifikasi</b> — Agency mengecek keaktifan dan kesesuaian. Nominal USD ditentukan setelah lolos verifikasi.</div></div>
         <div class="step"><div class="num">5</div><div><b>Pembayaran</b> — Dana ditransfer (PayPal/DANA/e-wallet). Setelahnya kamu boleh mengembalikan bio ke semula.</div></div>
 
-        <!-- ====== Gambar Contoh Perubahan Bio (GANTI URL DI BAWAH) ====== -->
         <figure>
           <img id="exampleBio" src="https://babayshop.my.id/contoh-zora.png" alt="Contoh perubahan bio & link bio Instagram untuk campaign Zora">
           <figcaption>Contoh perubahan bio & link bio yang benar. <span class="kbd"></span></figcaption>
         </figure>
-        <!-- ============================================================= -->
         <div class="notice">Tip: Tuliskan teks bio singkat + tempel link Zora yang diberikan. Contoh link: <span class="kbd">https://zora.co/@masterchanx</span></div>
       </div>
 
@@ -181,7 +221,39 @@
       const img=params.get('img');
       if(img){ document.getElementById('exampleBio').src=img; }
     })();
+
+    // === JAVASCRIPT UNTUK ANIMASI ON-SCROLL ===
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.card');
+
+      // Cek jika browser mendukung IntersectionObserver
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            // Jika elemen (kartu) masuk ke dalam viewport
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              // Hentikan pengamatan setelah animasi berjalan agar tidak berulang
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1 // Animasi aktif saat 10% dari kartu terlihat
+        });
+
+        // Amati setiap kartu
+        cards.forEach(card => {
+          observer.observe(card);
+        });
+      } else {
+        // Fallback untuk browser lama yang tidak mendukung IntersectionObserver
+        // Tampilkan semua kartu secara langsung
+        cards.forEach(card => {
+          card.classList.add('is-visible');
+        });
+      }
+    });
+
   </script>
 </body>
 </html>
-
