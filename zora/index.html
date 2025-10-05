@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zora</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column; /* Mengubah ini menjadi kolom */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .generator-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+
+        .generator-container h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #1c1c1e;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #3c3c3e;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button.generate-btn, button.save-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 10px; /* Jarak antar tombol */
+        }
+
+        button.generate-btn {
+            background-color: #007aff;
+            color: white;
+        }
+
+        button.generate-btn:hover {
+            background-color: #0056b3;
+        }
+
+        button.save-btn {
+            background-color: #28a745; /* Warna hijau untuk tombol simpan */
+            color: white;
+        }
+
+        button.save-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Zora Display Styles */
+        .zora-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px; /* Jarak antara tampilan Zora dan tombol */
+        }
+
+        /* Penting: html2canvas paling baik bekerja jika elemen yang diambil memiliki ukuran eksplisit */
+        #zora-display {
+            background-color: #000000;
+            color: #ffffff;
+            width: 370px; /* Tetapkan lebar eksplisit */
+            min-height: 480px; /* Tetapkan tinggi minimum eksplisit agar konsisten */
+            border-radius: 24px;
+            padding: 25px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            /* html2canvas tidak selalu menangani overflow dengan baik, pastikan konten tidak keluar */
+            overflow: hidden; 
+        }
+
+        .zora-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .zora-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            text-align: center;
+        }
+
+        .zora-header .icon-upload {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+        }
+
+        .zora-profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .zora-profile .username {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .zora-profile .avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #0052ff;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+        }
+
+        .zora-balance {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .zora-balance .earned-text {
+            color: #a0a0a0;
+            font-size: 16px;
+            margin: 0 0 10px 0;
+        }
+
+        .zora-balance .amount {
+            font-size: 72px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+
+        .zora-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .zora-actions .action-button {
+            background-color: #1c1c1e;
+            border-radius: 12px;
+            flex-grow: 1;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: default; /* Non-interaktif, jadi kursor default */
+        }
+        
+        .zora-actions .action-button .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .zora-actions .action-button span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="generator-container">
+        <div class="input-group">
+            <label for="usernameInput">Username</label>
+            <input type="text" id="usernameInput" placeholder="Contoh: johndoe">
+        </div>
+        <div class="input-group">
+            <label for="amountInput">Jumlah Dollar ($)</label>
+            <input type="number" id="amountInput" placeholder="Contoh: 6.54" step="0.01">
+        </div>
+        <button class="generate-btn" onclick="generateDisplay()">Buat Tampilan</button>
+        <button class="save-btn" onclick="saveAsPng()">Simpan sebagai PNG</button>
+    </div>
+
+    <div class="zora-wrapper">
+        <div id="zora-display">
+            <header class="zora-header">
+                <h1>ZORA</h1>
+                <svg class="icon-upload" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4L12 16M12 4L8 8M12 4L16 8M4 20H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </header>
+
+            <section class="zora-profile">
+                <p class="username" id="displayUsername">@username</p>
+                <div class="avatar"></div>
+            </section>
+
+            <section class="zora-balance">
+                <p class="earned-text">you have successfully earned</p>
+                <h1 class="amount" id="displayAmount">$0.00</h1>
+            </section>
+
+            <footer class="zora-actions">
+                <div class="action-button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V20M4 12H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Buy</span>
+                </div>
+                <div class="action-button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.5 15.5V14.5C10.5 13.5 11 13 12 13C13 13 13.5 13.5 13.5 14.5V15.5C13.5 16.5 13 17 12 17C11 17 10.5 16.5 10.5 15.5ZM12 7C11.5 7 11.0833 7.16667 10.75 7.5C10.4167 7.83333 10.25 8.25 10.25 8.75H11.75C11.75 8.58333 11.8125 8.4375 11.9375 8.3125C12.0625 8.1875 12.1875 8.125 12.3125 8.125C12.625 8.125 12.875 8.375 12.875 8.75C12.875 9.125 12.75 9.375 12.5 9.5L11.5 10.5C11 11 10.75 11.625 10.75 12.375V12.5H12.25V12.375C12.25 11.875 12.375 11.5 12.625 11.25L13.625 10.25C14.125 9.75 14.375 9.25 14.375 8.75C14.375 7.75 13.375 7 12 7Z" fill="white"/></svg>
+                    <span>Cash out</span>
+                </div>
+                <div class="action-button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Send</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        function generateDisplay() {
+            // 1. Mengambil nilai dari input
+            const usernameInput = document.getElementById('usernameInput').value;
+            const amountInput = parseFloat(document.getElementById('amountInput').value);
+
+            // 2. Memilih elemen yang akan diubah
+            const displayUsername = document.getElementById('displayUsername');
+            const displayAmount = document.getElementById('displayAmount');
+
+            // 3. Memperbarui tampilan dengan nilai baru
+            if (usernameInput) {
+                displayUsername.innerText = usernameInput.startsWith('@') ? usernameInput : '@' + usernameInput;
+            } else {
+                displayUsername.innerText = '@username'; // Default jika kosong
+            }
+            
+            if (!isNaN(amountInput)) {
+                displayAmount.innerText = '$' + amountInput.toFixed(2);
+            } else {
+                displayAmount.innerText = '$0.00'; // Default jika kosong atau bukan angka
+            }
+        }
+
+        // Fungsi baru untuk menyimpan sebagai PNG
+        function saveAsPng() {
+            const zoraDisplayElement = document.getElementById('zora-display');
+
+            // Menggunakan html2canvas untuk mengambil screenshot dari elemen
+            html2canvas(zoraDisplayElement, {
+                backgroundColor: null, // Penting: Biarkan latar belakang transparan jika elemen memiliki sudut membulat atau shadow
+                scale: 2 // Tingkatkan skala untuk kualitas gambar yang lebih baik
+            }).then(function(canvas) {
+                // Membuat link untuk mengunduh gambar
+                const link = document.createElement('a');
+                link.download = 'zora-display.png'; // Nama file yang akan diunduh
+                link.href = canvas.toDataURL('image/png'); // Mengubah kanvas menjadi data URL PNG
+                link.click(); // Memicu klik pada link untuk memulai unduhan
+            });
+        }
+
+        // Panggil generateDisplay() secara default saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', generateDisplay);
+    </script>
+
+</body>
+</html>
