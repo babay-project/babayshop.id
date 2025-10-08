@@ -1,3 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mengalihkan ke WhatsApp…</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;background:#f8fafc;
+         display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+    .card{background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.08);border-radius:16px;padding:28px;text-align:center}
+    h1{margin:0 0 8px;color:#111827;font-size:22px}
+    p{margin:6px 0;color:#4b5563}
+    #count{font-weight:700}
+    a.button{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:10px;text-decoration:none;
+             background:#25D366;color:#fff;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Mengarahkan ke WhatsApp…</h1>
+    <p>Halaman akan terbuka otomatis dalam <span id="count">10</span> detik.</p>
+    <p>Jika tidak otomatis, klik tombol di bawah ini:</p>
+    <a id="openNow" class="button" href="#" rel="nofollow">Buka WhatsApp Sekarang</a>
+  </div>
+
+  <script>
+    // Nomor WA harus format internasional tanpa 0 di depan
+    const phone   = "6288215993544"; 
+    const message = "halo min saya suah bayar qris";
+
+    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    // Set tombol fallback
+    document.getElementById("openNow").setAttribute("href", waUrl);
+
+    // Countdown
+    let sisa = 10;
+    const span = document.getElementById("count");
+    const timer = setInterval(() => {
+      sisa--;
+      span.textContent = sisa;
+      if (sisa <= 0) clearInterval(timer);
+    }, 1000);
+
+    // Redirect setelah 10 detik
+    setTimeout(() => {
+      window.location.href = waUrl;
+    }, 10000);
+  </script>
+</body>
+</html>
+
+
 
 
 <!DOCTYPE html>
