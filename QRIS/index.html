@@ -26,7 +26,7 @@
   <script>
     // Nomor WA harus format internasional tanpa 0 di depan
     const phone   = "6288215993544"; 
-    const message = "halo min saya suah bayar qris";
+    const message = "halo min saya mau bayar qris";
 
     const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
@@ -34,7 +34,7 @@
     document.getElementById("openNow").setAttribute("href", waUrl);
 
     // Countdown
-    let sisa = 10;
+    let sisa = 5;
     const span = document.getElementById("count");
     const timer = setInterval(() => {
       sisa--;
@@ -45,7 +45,7 @@
     // Redirect setelah 10 detik
     setTimeout(() => {
       window.location.href = waUrl;
-    }, 10000);
+    }, 5000);
   </script>
 </body>
 </html>
