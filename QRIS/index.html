@@ -1,56 +1,77 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mengalihkan ke WhatsApp…</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengalihkan ke halaman QRIS…</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;background:#f8fafc;
-         display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
-    .card{background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.08);border-radius:16px;padding:28px;text-align:center}
-    h1{margin:0 0 8px;color:#111827;font-size:22px}
-    p{margin:6px 0;color:#4b5563}
-    #count{font-weight:700}
-    a.button{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:10px;text-decoration:none;
-             background:#25D366;color:#fff;font-weight:600}
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 30px;
+      max-width: 320px;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #1e293b;
+    }
+    p {
+      font-size: 16px;
+      color: #475569;
+    }
+    #count {
+      font-weight: bold;
+      color: #2563eb;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 16px;
+      background-color: #22c55e;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Mengarahkan ke WhatsApp…</h1>
-    <p>Halaman akan terbuka otomatis dalam <span id="count">10</span> detik.</p>
-    <p>Jika tidak otomatis, klik tombol di bawah ini:</p>
-    <a id="openNow" class="button" href="#" rel="nofollow">Buka WhatsApp Sekarang</a>
+    <h1>Menunggu sebentar...</h1>
+    <p>Kamu akan dialihkan ke halaman QRIS dalam <span id="count">5</span> detik.</p>
+    <p>Jika tidak otomatis, klik tombol di bawah:</p>
+    <a class="button" id="openNow" href="https://shortisme.com/pTPFSE">Buka Sekarang</a>
   </div>
 
   <script>
-    // Nomor WA harus format internasional tanpa 0 di depan
-    const phone   = "6288215993544"; 
-    const message = "halo min saya mau bayar qris";
-
-    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-    // Set tombol fallback
-    document.getElementById("openNow").setAttribute("href", waUrl);
-
-    // Countdown
     let sisa = 5;
-    const span = document.getElementById("count");
-    const timer = setInterval(() => {
+    const tampil = document.getElementById("count");
+    const targetUrl = "https://shortisme.com/pTPFSE";
+
+    const interval = setInterval(() => {
       sisa--;
-      span.textContent = sisa;
-      if (sisa <= 0) clearInterval(timer);
+      tampil.textContent = sisa;
+      if (sisa <= 0) clearInterval(interval);
     }, 1000);
 
-    // Redirect setelah 10 detik
     setTimeout(() => {
-      window.location.href = waUrl;
+      window.location.href = targetUrl;
     }, 5000);
   </script>
 </body>
 </html>
-
-
 
 
 <!DOCTYPE html>
