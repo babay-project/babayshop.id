@@ -3,8 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DramaBoxHub - Login</title>
+        <title>DramaBoxHub</title>
         <style>
+            /* --- Variabel CSS (Gelap & Pink) --- */
+            :root {
+                --text-light: #f0f0f0;
+                --shadow-color: rgba(0, 0, 0, 0.5);
+                --glass-bg: rgba(0, 0, 0, 0.4);
+                --glass-border: rgba(255, 255, 255, 0.08);
+                --accent-glass-bg: rgba(232, 62, 140, 0.25);
+                --accent-border: rgba(232, 62, 140, 0.7);
+            }
+            /* --- --- */
+
             * {
                 margin: 0;
                 padding: 0;
@@ -13,68 +24,149 @@
 
             body {
                 font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                /* Diubah: Latar belakang ambient gelap (gradasi radial)
-                  dari abu-abu sangat gelap di tengah ke hitam pekat di tepi.
-                */
-                background: radial-gradient(
-                    ellipse at center,
-                    #1a1a1a 0%,
-                    #000000 70%
-                );
+                /* Latar belakang gradasi hitam */
+                background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 padding: 20px;
+                color: var(--text-light);
+                overflow-x: hidden;
             }
 
+            /* --- Efek gelembung bergerak --- */
+            .bg-animation {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+            }
+            .shape {
+                position: absolute;
+                /* Background shape pink transparan */
+                background: var(--accent-glass-bg);
+                border-radius: 50%;
+                animation: float 10s ease-in-out infinite alternate;
+                filter: blur(8px);
+                transform: translate(
+                    var(--parallax-x, 0px),
+                    var(--parallax-y, 0px)
+                );
+                transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+            .shape:nth-child(1) {
+                width: 150px;
+                height: 150px;
+                top: 10%;
+                left: 10%;
+                animation-duration: 12s;
+            }
+            .shape:nth-child(2) {
+                width: 100px;
+                height: 100px;
+                top: 30%;
+                right: 15%;
+                animation-duration: 8s;
+                animation-delay: -2s;
+            }
+            .shape:nth-child(3) {
+                width: 120px;
+                height: 120px;
+                bottom: 15%;
+                left: 20%;
+                animation-duration: 10s;
+                animation-delay: -4s;
+            }
+            .shape:nth-child(4) {
+                width: 80px;
+                height: 80px;
+                bottom: 40%;
+                right: 25%;
+                animation-duration: 14s;
+                animation-delay: -6s;
+            }
+            .shape:nth-child(5) {
+                width: 60px;
+                height: 60px;
+                top: 50%;
+                left: 40%;
+                animation-duration: 9s;
+                animation-delay: -3s;
+                opacity: 0.7;
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translateY(0px) translateX(0px) rotate(0deg)
+                        scale(1);
+                }
+                50% {
+                    transform: translateY(-30px) translateX(20px) rotate(180deg)
+                        scale(1.1);
+                }
+                100% {
+                    transform: translateY(10px) translateX(-10px) rotate(360deg)
+                        scale(1);
+                }
+            }
+            /* --- Akhir efek gelembung --- */
+
+            /* --- Kotak Kaca (Glassmorphism) --- */
             .container {
-                /* Diubah: Efek transparan (glassmorphism)
-                  - Background diubah ke rgba() untuk transparansi (90% opacity).
-                  - backdrop-filter: blur() ditambahkan untuk efek frosted glass.
-                  - Border halus ditambahkan untuk mempertegas tepi.
-                */
-                background: rgba(
-                    31,
-                    31,
-                    31,
-                    0.9
-                ); /* #1f1f1f dengan 90% opacity */
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px); /* Untuk Safari */
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                /* --- */
-                border-radius: 20px;
-                padding: 40px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
                 max-width: 450px;
                 width: 100%;
+                padding: 40px;
                 text-align: center;
+                background: var(--glass-bg);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-radius: 25px;
+                border: 1px solid var(--glass-border);
+                box-shadow: 0 15px 35px var(--shadow-color);
+                animation: fadeInScaleUp 0.8s ease-out forwards;
+                z-index: 1;
+                /* Mengatur tinggi agar transisi mulus */
+                min-height: 380px;
             }
 
+            @keyframes fadeInScaleUp {
+                from {
+                    opacity: 0;
+                    transform: scale(0.95) translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+
+            /* --- Konten Internal --- */
             .logo {
                 font-size: 36px;
                 font-weight: bold;
-                color: #e83e8c;
-                background: none;
-                -webkit-background-clip: unset;
-                -webkit-text-fill-color: unset;
+                color: #e83e8c; /* Pink cerah */
                 margin-bottom: 10px;
             }
 
             .subtitle {
-                color: #aaa;
+                color: var(--text-light);
+                opacity: 0.85;
                 margin-bottom: 30px;
                 font-size: 14px;
             }
 
+            /* --- Bagian Login --- */
             .pin-input {
                 width: 100%;
                 padding: 15px 20px;
                 font-size: 18px;
-                background: #2b2b2b;
-                border: 2px solid #444;
-                color: #ffffff;
+                background: rgba(0, 0, 0, 0.3);
+                border: 1px solid var(--glass-border);
+                color: var(--text-light);
                 border-radius: 10px;
                 text-align: center;
                 letter-spacing: 3px;
@@ -82,19 +174,20 @@
                 text-transform: uppercase;
                 margin-bottom: 10px;
             }
-
+            .pin-input::placeholder {
+                color: rgba(255, 255, 255, 0.3);
+            }
             .pin-input:focus {
                 outline: none;
-                border-color: #e83e8c;
+                border-color: var(--accent-border);
                 box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.3);
             }
-
             .pin-hint {
                 font-size: 12px;
-                color: #888;
+                color: var(--text-light);
+                opacity: 0.7;
                 margin-bottom: 20px;
             }
-
             .login-btn {
                 width: 100%;
                 padding: 15px;
@@ -109,31 +202,26 @@
                     transform 0.2s,
                     box-shadow 0.2s;
             }
-
             .login-btn:hover {
                 transform: translateY(-2px);
                 box-shadow: 0 10px 20px rgba(232, 62, 140, 0.4);
             }
-
             .error-msg {
                 color: #e74c3c;
                 margin-top: 15px;
                 font-size: 14px;
                 display: none;
             }
-
             .success-msg {
                 color: #27ae60;
                 margin-top: 15px;
                 font-size: 14px;
                 display: none;
             }
-
             .loading {
                 display: none;
                 margin-top: 15px;
             }
-
             .loading-spinner {
                 border: 3px solid #555;
                 border-top: 3px solid #e83e8c;
@@ -143,7 +231,6 @@
                 animation: spin 1s linear infinite;
                 margin: 0 auto;
             }
-
             @keyframes spin {
                 0% {
                     transform: rotate(0deg);
@@ -152,7 +239,6 @@
                     transform: rotate(360deg);
                 }
             }
-
             @keyframes shake {
                 0%,
                 100% {
@@ -165,43 +251,94 @@
                     transform: translateX(10px);
                 }
             }
+
+            /* --- Bagian Server --- */
+            .server-links {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin-top: 30px;
+                width: 100%;
+            }
+            .server-btn {
+                padding: 15px;
+                font-size: 16px;
+                font-weight: bold;
+                color: white;
+                background: linear-gradient(135deg, #e83e8c 0%, #d81b60 100%);
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+                text-decoration: none;
+                display: block;
+                text-align: center;
+            }
+            .server-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(232, 62, 140, 0.4);
+            }
         </style>
     </head>
 
     <body>
+        <div class="bg-animation">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
         <div class="container">
-            <div class="logo"><b>DramaBoxHub</b></div>
-            <div class="subtitle">Platform Streaming Drama Short Premium</div>
+            <div id="loginScreen">
+                <div class="logo">🎬 Dramabox</div>
+                <div class="subtitle">Platform Streaming Premium</div>
 
-            <form id="loginForm">
-                <input
-                    type="text"
-                    class="pin-input"
-                    id="pinInput"
-                    placeholder="MASUKKAN PIN"
-                    maxlength="6"
-                    autocomplete="off"
-                    required
-                />
-                <div class="pin-hint">PIN terdiri dari 6 angka</div>
+                <form id="loginForm">
+                    <input
+                        type="text"
+                        class="pin-input"
+                        id="pinInput"
+                        placeholder="MASUKKAN PIN"
+                        maxlength="8"
+                        autocomplete="off"
+                        required
+                    />
+                    <div class="pin-hint">PIN terdiri dari 6 angka</div>
+                    <button type="submit" class="login-btn">MASUK</button>
+                </form>
 
-                <button type="submit" class="login-btn">MASUK</button>
-            </form>
-
-            <div class="error-msg" id="errorMsg">
-                PIN tidak valid! Silakan coba lagi.
+                <div class="error-msg" id="errorMsg">
+                    PIN tidak valid! Silakan coba lagi.
+                </div>
+                <div class="success-msg" id="successMsg">
+                    ✓ PIN Valid! Mengalihkan...
+                </div>
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                </div>
             </div>
-            <div class="success-msg" id="successMsg">
-                ✓ PIN Valid! Mengalihkan...
-            </div>
 
-            <div class="loading" id="loading">
-                <div class="loading-spinner"></div>
+            <div id="serverScreen" style="display: none">
+                <div class="logo">🎬 DramaBoxHub</div>
+                <div class="subtitle">Pilih Server Anda</div>
+
+                <div class="server-links">
+                    <a href="https://dramabox.drama.web.id/" class="server-btn">
+                        DramaBox Server 1
+                    </a>
+                    <a href="https://netshort.drama.web.id/" class="server-btn">
+                        DramaBoxServer 2
+                    </a>
+                </div>
             </div>
         </div>
 
         <script>
-            // Bagian JavaScript tidak perlu diubah
+            // Daftar PIN yang valid
             const validPins = [
                 "830174",
                 "295508",
@@ -216,32 +353,49 @@
                 "BABAY",
             ];
 
+            // Ambil elemen-elemen
+            const loginScreen = document.getElementById("loginScreen");
+            const serverScreen = document.getElementById("serverScreen");
+
             const form = document.getElementById("loginForm");
             const pinInput = document.getElementById("pinInput");
             const errorMsg = document.getElementById("errorMsg");
             const successMsg = document.getElementById("successMsg");
             const loading = document.getElementById("loading");
 
+            // Konversi input ke huruf besar
             pinInput.addEventListener("input", () => {
                 pinInput.value = pinInput.value.toUpperCase();
             });
 
+            // Logika saat form di-submit
             form.addEventListener("submit", function (e) {
                 e.preventDefault();
 
                 const enteredPin = pinInput.value.trim().toUpperCase();
                 errorMsg.style.display = "none";
                 successMsg.style.display = "none";
+                loading.style.display = "none";
 
                 if (validPins.includes(enteredPin)) {
+                    // --- JIKA PIN BENAR ---
+
+                    // 1. Tampilkan pesan sukses & loading
                     successMsg.style.display = "block";
                     loading.style.display = "block";
 
+                    // 2. Sembunyikan form agar tidak di-klik lagi
+                    form.style.display = "none";
+
+                    // 3. Tunggu 1.5 detik
                     setTimeout(() => {
-                        window.location.href =
-                            "https://dramabox.drama.web.id/browse";
+                        // 4. Sembunyikan seluruh layar login
+                        loginScreen.style.display = "none";
+                        // 5. Tampilkan layar pilih server
+                        serverScreen.style.display = "block";
                     }, 1500);
                 } else {
+                    // --- JIKA PIN SALAH ---
                     errorMsg.style.display = "block";
                     pinInput.value = "";
                     pinInput.focus();
@@ -252,8 +406,6 @@
                     }, 500);
                 }
             });
-
-            console.log("Valid PINs:", validPins);
         </script>
     </body>
 </html>
