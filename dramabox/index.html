@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dramabox - Login</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                /* Diubah: Latar belakang ambient gelap (gradasi radial)
+                  dari abu-abu sangat gelap di tengah ke hitam pekat di tepi.
+                */
+                background: radial-gradient(
+                    ellipse at center,
+                    #1a1a1a 0%,
+                    #000000 70%
+                );
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .container {
+                /* Diubah: Efek transparan (glassmorphism)
+                  - Background diubah ke rgba() untuk transparansi (90% opacity).
+                  - backdrop-filter: blur() ditambahkan untuk efek frosted glass.
+                  - Border halus ditambahkan untuk mempertegas tepi.
+                */
+                background: rgba(
+                    31,
+                    31,
+                    31,
+                    0.9
+                ); /* #1f1f1f dengan 90% opacity */
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px); /* Untuk Safari */
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                /* --- */
+                border-radius: 20px;
+                padding: 40px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                max-width: 450px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .logo {
+                font-size: 36px;
+                font-weight: bold;
+                color: #e83e8c;
+                background: none;
+                -webkit-background-clip: unset;
+                -webkit-text-fill-color: unset;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                color: #aaa;
+                margin-bottom: 30px;
+                font-size: 14px;
+            }
+
+            .pin-input {
+                width: 100%;
+                padding: 15px 20px;
+                font-size: 18px;
+                background: #2b2b2b;
+                border: 2px solid #444;
+                color: #ffffff;
+                border-radius: 10px;
+                text-align: center;
+                letter-spacing: 3px;
+                transition: all 0.3s;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+            }
+
+            .pin-input:focus {
+                outline: none;
+                border-color: #e83e8c;
+                box-shadow: 0 0 0 3px rgba(232, 62, 140, 0.3);
+            }
+
+            .pin-hint {
+                font-size: 12px;
+                color: #888;
+                margin-bottom: 20px;
+            }
+
+            .login-btn {
+                width: 100%;
+                padding: 15px;
+                font-size: 16px;
+                font-weight: bold;
+                color: white;
+                background: linear-gradient(135deg, #e83e8c 0%, #d81b60 100%);
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
+
+            .login-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(232, 62, 140, 0.4);
+            }
+
+            .error-msg {
+                color: #e74c3c;
+                margin-top: 15px;
+                font-size: 14px;
+                display: none;
+            }
+
+            .success-msg {
+                color: #27ae60;
+                margin-top: 15px;
+                font-size: 14px;
+                display: none;
+            }
+
+            .loading {
+                display: none;
+                margin-top: 15px;
+            }
+
+            .loading-spinner {
+                border: 3px solid #555;
+                border-top: 3px solid #e83e8c;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes shake {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+                25% {
+                    transform: translateX(-10px);
+                }
+                75% {
+                    transform: translateX(10px);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="logo">🎬 Dramabox</div>
+            <div class="subtitle">Platform Streaming Premium</div>
+
+            <form id="loginForm">
+                <input
+                    type="text"
+                    class="pin-input"
+                    id="pinInput"
+                    placeholder="MASUKKAN PIN"
+                    maxlength="8"
+                    autocomplete="off"
+                    required
+                />
+                <div class="pin-hint">PIN terdiri dari 6 angka</div>
+
+                <button type="submit" class="login-btn">MASUK</button>
+            </form>
+
+            <div class="error-msg" id="errorMsg">
+                PIN tidak valid! Silakan coba lagi.
+            </div>
+            <div class="success-msg" id="successMsg">
+                ✓ PIN Valid! Mengalihkan...
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+
+        <script>
+            // Bagian JavaScript tidak perlu diubah
+            const validPins = [
+                "830174",
+                "295508",
+                "612933",
+                "476821",
+                "901156",
+                "188492",
+                "745360",
+                "369275",
+                "520641",
+                "084799",
+                "BABAY",
+            ];
+
+            const form = document.getElementById("loginForm");
+            const pinInput = document.getElementById("pinInput");
+            const errorMsg = document.getElementById("errorMsg");
+            const successMsg = document.getElementById("successMsg");
+            const loading = document.getElementById("loading");
+
+            pinInput.addEventListener("input", () => {
+                pinInput.value = pinInput.value.toUpperCase();
+            });
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const enteredPin = pinInput.value.trim().toUpperCase();
+                errorMsg.style.display = "none";
+                successMsg.style.display = "none";
+
+                if (validPins.includes(enteredPin)) {
+                    successMsg.style.display = "block";
+                    loading.style.display = "block";
+
+                    setTimeout(() => {
+                        window.location.href =
+                            "https://dramabox.drama.web.id/browse";
+                    }, 1500);
+                } else {
+                    errorMsg.style.display = "block";
+                    pinInput.value = "";
+                    pinInput.focus();
+                    pinInput.style.animation = "shake 0.5s";
+
+                    setTimeout(() => {
+                        pinInput.style.animation = "";
+                    }, 500);
+                }
+            });
+
+            console.log("Valid PINs:", validPins);
+        </script>
+    </body>
+</html>
