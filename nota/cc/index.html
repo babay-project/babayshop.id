@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Capcut Pro Nota Generator</title>
+        <!-- Memuat Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Konfigurasi font Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* Menggunakan font Inter sebagai default */
+            body {
+                font-family: "Inter", sans-serif;
+            }
+
+            /* Animasi latar belakang galaksi */
+            @keyframes galaxy-bg {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            .galaxy-background {
+                background: linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e3a8a,
+                    #000033,
+                    #1d4ed8
+                );
+                background-size: 300% 300%;
+                animation: galaxy-bg 20s ease infinite;
+            }
+
+            /* Animasi fade-in untuk container */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .fade-in {
+                animation: fadeIn 0.8s ease-out forwards;
+            }
+
+            /* Animasi slide-in untuk hasil nota */
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .slide-in-up {
+                animation: slideInUp 0.6s ease-out forwards;
+            }
+
+            /* Custom scrollbar */
+            textarea::-webkit-scrollbar {
+                width: 8px;
+            }
+            textarea::-webkit-scrollbar-track {
+                background: #1e293b; /* slate-800 */
+                border-radius: 10px;
+            }
+            textarea::-webkit-scrollbar-thumb {
+                background: #3b82f6; /* blue-500 */
+                border-radius: 10px;
+            }
+            textarea::-webkit-scrollbar-thumb:hover {
+                background: #2563eb; /* blue-600 */
+            }
+        </style>
+    </head>
+    <body
+        class="galaxy-background text-white min-h-screen flex items-center justify-center p-4"
+    >
+        <!-- Kontainer Utama -->
+        <div
+            class="w-full max-w-md md:max-w-2xl bg-slate-900/70 backdrop-blur-md rounded-2xl shadow-2xl border border-blue-500/30 p-6 md:p-10 fade-in"
+        >
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1
+                    class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300"
+                >
+                    Nota Generator
+                </h1>
+                <p class="text-slate-300 text-lg mt-2">Capcut Pro & Team</p>
+            </div>
+
+            <!-- Form Generator -->
+            <form id="notaForm" class="space-y-6">
+                <!-- Pilihan Plan Service -->
+                <div>
+                    <label
+                        for="planService"
+                        class="block mb-2 text-sm font-medium text-slate-200"
+                        >Plan Service</label
+                    >
+                    <select
+                        id="planService"
+                        name="planService"
+                        required
+                        class="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all duration-300"
+                    >
+                        <option value="" selected disabled>
+                            -- Pilih Tipe Plan --
+                        </option>
+                        <option value="capcut-pro">Capcut Pro</option>
+                        <option value="capcut-pro-team">Capcut Pro Team</option>
+                    </select>
+                </div>
+
+                <!-- Pilihan Durasi & Harga (Dinamis) -->
+                <div id="durasiContainer" class="hidden">
+                    <label
+                        for="durasi"
+                        class="block mb-2 text-sm font-medium text-slate-200"
+                        >Durasi & Harga</label
+                    >
+                    <select
+                        id="durasi"
+                        name="durasi"
+                        required
+                        class="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all duration-300"
+                    >
+                        <!-- Opsi akan diisi oleh JavaScript -->
+                    </select>
+                </div>
+
+                <!-- Input Email -->
+                <div>
+                    <label
+                        for="email"
+                        class="block mb-2 text-sm font-medium text-slate-200"
+                        >Email</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="admin@babayshop.my.id"
+                        class="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all duration-300 placeholder-slate-500"
+                    />
+                </div>
+
+                <!-- Input Password -->
+                <div>
+                    <label
+                        for="password"
+                        class="block mb-2 text-sm font-medium text-slate-200"
+                        >Password</label
+                    >
+                    <!-- Mengubah type="password" menjadi type="text" dan menghapus div.relative serta tombol -->
+                    <input
+                        type="text"
+                        id="password"
+                        name="password"
+                        required
+                        placeholder="Masukkan password..."
+                        class="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 transition-all duration-300 placeholder-slate-500"
+                    />
+                </div>
+
+                <!-- Tombol Generate -->
+                <button
+                    type="submit"
+                    class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-bold rounded-lg text-sm px-5 py-3 text-center transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-500/30"
+                >
+                    ✨ Generate Nota
+                </button>
+            </form>
+
+            <!-- Hasil Nota -->
+            <div id="outputSection" class="mt-10 hidden">
+                <h2
+                    class="text-2xl font-semibold text-slate-200 mb-4 slide-in-up"
+                >
+                    Hasil Nota (Bisa Diedit)
+                </h2>
+
+                <!-- Textarea untuk mengedit -->
+                <textarea
+                    id="notaOutput"
+                    rows="20"
+                    class="w-full bg-slate-950 border border-slate-700 text-slate-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 font-mono slide-in-up"
+                    style="animation-delay: 100ms"
+                    readonly
+                ></textarea>
+                <!-- Tambahkan atribut readonly -->
+
+                <!-- Tombol Aksi (Edit & Salin) -->
+                <div
+                    class="mt-4 flex flex-col sm:flex-row items-center gap-4 slide-in-up"
+                    style="animation-delay: 200ms"
+                >
+                    <button
+                        id="editButton"
+                        class="w-full sm:w-auto text-white bg-amber-600 hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 transform hover:scale-105"
+                    >
+                        Edit Nota
+                    </button>
+                    <button
+                        id="copyButton"
+                        class="w-full sm:w-auto text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 transform hover:scale-105"
+                    >
+                        Salin Nota
+                    </button>
+                    <span
+                        id="copyMessage"
+                        class="text-green-400 text-sm hidden sm:ml-4"
+                        >Berhasil disalin!</span
+                    >
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const planServiceEl = document.getElementById("planService");
+                const durasiContainerEl =
+                    document.getElementById("durasiContainer");
+                const durasiEl = document.getElementById("durasi");
+                const notaFormEl = document.getElementById("notaForm");
+                const outputSectionEl =
+                    document.getElementById("outputSection");
+                const notaOutputEl = document.getElementById("notaOutput");
+                const copyButtonEl = document.getElementById("copyButton");
+                const copyMessageEl = document.getElementById("copyMessage");
+                const editButtonEl = document.getElementById("editButton"); // Tambahkan tombol edit
+
+                // Data Harga (Diperbarui)
+                const priceData = {
+                    "capcut-pro": [
+                        // Diperbarui sesuai permintaan: 7d, 14d, 28d, harga sama
+                        { name: "Capcut Pro 7 Day", price: 12500 },
+                        { name: "Capcut Pro 14 Day", price: 16500 },
+                        { name: "Capcut Pro 28 Day", price: 22500 },
+                    ],
+                    "capcut-pro-team": [
+                        { name: "Capcut Pro Team 7 Day", price: 12500 },
+                        { name: "Capcut Pro Team 14 Day", price: 16500 },
+                        { name: "Capcut Pro Team 28 Day", price: 22500 },
+                        { name: "Capcut Pro Team 35 Day", price: 25500 },
+                        { name: "Capcut Pro Team 6 Bulan", price: 120500 },
+                    ],
+                };
+
+                // Fungsi untuk format mata uang Rupiah
+                const formatRupiah = (number) => {
+                    return new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        minimumFractionDigits: 0,
+                    })
+                        .format(number)
+                        .replace("Rp", "Rp. "); // Menambah spasi
+                };
+
+                // Event listener saat Plan Service berubah
+                planServiceEl.addEventListener("change", (e) => {
+                    const selectedPlan = e.target.value;
+                    const durations = priceData[selectedPlan] || [];
+
+                    // Kosongkan opsi durasi
+                    durasiEl.innerHTML =
+                        '<option value="" selected disabled>-- Pilih Durasi --</option>';
+
+                    // Isi opsi durasi baru
+                    durations.forEach((item) => {
+                        const option = document.createElement("option");
+                        option.value = item.name;
+                        option.textContent = `${item.name} (${formatRupiah(item.price)})`;
+                        durasiEl.appendChild(option);
+                    });
+
+                    // Tampilkan container durasi
+                    durasiContainerEl.classList.remove("hidden");
+                    durasiContainerEl.classList.add("fade-in");
+                });
+
+                // Event listener saat form disubmit
+                notaFormEl.addEventListener("submit", (e) => {
+                    e.preventDefault();
+
+                    const serviceName = durasiEl.value;
+                    const email = document.getElementById("email").value;
+                    const password = document.getElementById("password").value;
+
+                    // Membuat format Waktu Transaksi
+                    const now = new Date();
+                    const tgl = now.toLocaleString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                    });
+                    // Mengganti . dengan : untuk format waktu
+                    const waktu = now
+                        .toLocaleString("id-ID", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                        })
+                        .replace(/\./g, ":");
+                    const formattedTime = `${tgl} pukul ${waktu} WIB`;
+
+                    // Template Nota
+                    const notaTemplate = `
+╭────〔 Babayshop.my.id 〕─
+┊・Service : ${serviceName}
+┊・Desc : AKSES SEMUA FITUR PRO , GARANSI
+┊・INFO LENGKAP : https://babayshop.my.id/cc
+┊・Waktu Transaksi : ${formattedTime}
+╰┈┈┈┈┈┈┈┈
+- Email: ${email}
+- Password: ${password}
+- akses email : https://generator.email/${email}
+╰┈┈┈┈┈┈┈┈
+BONUS VIDEO TUTORIAL CREATOR CAPCUT : https://drive.google.com/drive/folders/1I93NrVKJjmzBw_wXpCOIJvU0K2ouYiiM
+Syarat dan ketentuan :
+➥Garansi pada saat pertama kali login
+➥Hanya garansi Backfree bukan kesalahan sendiri (disable/hack/pelanggaran)
+➥Maks login 1 akun private adalah 2 Device, lebih dari itu rawan kena maximum
+➥Tidak ada garansi bila akun kena maximum, bisa diatasi dengan cara lupa password/tunggu beberapa jam untuk login kembali
+➥Cara Ganti Password dan Email Capcut bisa ditonton di Reels : https://shortisme.com/WDdXGE
+➥Disarankan Hapus Data aplikasi sebelum login! (kecuali masih ada project sebelumnya yg belum selesai edit)
+➥Login hanya via Email
+➥Login PC bisa scan via QR
+➥Jika masa aktif pro-nya sudah habis silahkan log out, dan ganti akun
+➥Jika terdapat kendala silahkan hubungi admin
+`.trim(); // .trim() untuk menghapus spasi ekstra di awal
+
+                    // Tampilkan hasil
+                    notaOutputEl.value = notaTemplate;
+                    notaOutputEl.readOnly = true; // Set readonly saat nota baru dibuat
+                    outputSectionEl.classList.remove("hidden");
+
+                    // Reset tombol Edit
+                    editButtonEl.textContent = "Edit Nota";
+                    editButtonEl.classList.remove("bg-gray-600");
+                    editButtonEl.classList.add("bg-amber-600");
+                    editButtonEl.disabled = false;
+
+                    // Scroll ke hasil
+                    outputSectionEl.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                });
+
+                // Event listener untuk tombol salin
+                copyButtonEl.addEventListener("click", () => {
+                    notaOutputEl.select();
+                    // Gunakan document.execCommand untuk kompatibilitas iframe yang lebih baik
+                    try {
+                        document.execCommand("copy");
+                        copyMessageEl.classList.remove("hidden");
+                        copyButtonEl.textContent = "Berhasil Disalin!";
+                        copyButtonEl.classList.replace(
+                            "bg-green-600",
+                            "bg-blue-600",
+                        );
+
+                        setTimeout(() => {
+                            copyMessageEl.classList.add("hidden");
+                            copyButtonEl.textContent = "Salin Nota";
+                            copyButtonEl.classList.replace(
+                                "bg-blue-600",
+                                "bg-green-600",
+                            );
+                        }, 2500);
+                    } catch (err) {
+                        console.error("Gagal menyalin teks: ", err);
+                        copyMessageEl.textContent = "Gagal menyalin!";
+                        copyMessageEl.classList.replace(
+                            "text-green-400",
+                            "text-red-400",
+                        );
+                        copyMessageEl.classList.remove("hidden");
+                    }
+                });
+
+                // Event listener untuk tombol edit
+                editButtonEl.addEventListener("click", () => {
+                    notaOutputEl.readOnly = false; // Aktifkan mode edit
+                    notaOutputEl.focus(); // Fokus ke textarea
+
+                    // Ubah tampilan tombol edit
+                    editButtonEl.textContent = "Mode Edit Aktif";
+                    editButtonEl.classList.remove("bg-amber-600");
+                    editButtonEl.classList.add("bg-gray-600");
+                    editButtonEl.disabled = true; // Nonaktifkan tombol setelah diklik
+                });
+            });
+        </script>
+    </body>
+</html>
